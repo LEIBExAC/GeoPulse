@@ -9,7 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "express": "^5.1.0",
-    "mongoose": "^8.15.1"
+    "mongodb": "^6.16.0",
+    "mongoose": "^8.15.1",
+    "router": "^2.2.0"
   }
 }
