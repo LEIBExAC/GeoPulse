@@ -1,6 +1,10 @@
 const express = require("express");
 const USER = require("../models/user");
 const bcrypt = require('bcrypt');
+const {JWT_SECRET} = require("../utility/keys")
+const generateTokenAndSetCookie = require("../utility/generateTokenAndSetCookie")
+const { sendVerificationEmail, sendVerificationConfrmEmail} = require("../config/emailSender")
+const jwt = require("jsonwebtoken")
 
 const router = express.Router();
 
@@ -9,7 +13,7 @@ router.post("/signup", async (req, res) => {
 
 
         console.log("Signup Route Hitted ..")
-        const { name, email, password , role } = req.body;
+        const { name, email, password, role } = req.body;
         // console.log("name : " + name + "  email : " + email +  "  password : " + password );
         if (!name || !email || !password) {
             return res.status(400).json({ message: "Please Enter All Fields" });
@@ -17,15 +21,22 @@ router.post("/signup", async (req, res) => {
 
         const existingUser = await USER.findOne({ email });
         if (existingUser) {
-            if(existingUser.isVerified){
+            if (existingUser.isVerified) {
                 return res.status(400).json({ message: "User already exists with this email" });
             }
-            else{
-                existingUser.verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
+            else {
+                const newVerificationToken = Math.floor(100000 + Math.random() * 900000).toString();
+                existingUser.verificationToken = newVerificationToken;
                 existingUser.name = name;
-                existingUser.password = password;
-                existingUser.verificationTokenExpiresAt = Date.now() + 5 * 60 * 1000 //5 min
-                return res.status(200).json({message:"verification email is resent"})
+                existingUser.password = await bcrypt.hash(password, 10);
+                existingUser.verificationTokenExpiresAt = Date.now() + 5 * 60 * 1000; // 5 min
+
+                await existingUser.save(); // Important!
+
+                sendVerificationEmail(email, newVerificationToken);
+                generateTokenAndSetCookie(res, existingUser._id);
+                return res.status(200).json({ message: "Verification email is resent" });
+
             }
         }
 
@@ -40,20 +51,73 @@ router.post("/signup", async (req, res) => {
             password: hashedPassword,
             role,
             verificationToken,
-            VerificationTokenExpiresAt : Date.now() + 5 * 60 * 1000 //5 min
+            verificationTokenExpiresAt: Date.now() + 5 * 60 * 1000 //5 min
 
         });
 
         savedUser = await user.save();
+        sendVerificationEmail(email, verificationToken)
+        generateTokenAndSetCookie(res, savedUser._id);
 
         res.status(201).json({ message: 'Signup successful', savedUser });
     }
-    catch(error){
-        console.log("signup error : "  +  error)
-        return res.status(500).json({message:"Server Error"})
+    catch (error) {
+        console.log("signup error : " + error)
+        return res.status(500).json({ message: "Server Error" })
     }
 
 })
+
+
+
+
+router.post("/verify-otp", async (req, res) => {
+    try {
+        console.log("Verification Route Hitted..");
+
+        const token = req.cookies.token;
+        // console.log("Cookies: ", req.cookies); // Debug line
+
+        if (!token) {
+            return res.status(401).json({ message: "Unauthorized. No token provided." });
+        }
+
+        const decoded = jwt.verify(token,JWT_SECRET);
+        const userId = decoded.userId;
+
+        const user = await USER.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        const { otp } = req.body;
+        if (!otp) {
+            return res.status(400).json({ message: "OTP is required." });
+        }
+
+        // Check if token matches and is still valid
+        if (
+            user.verificationToken !== otp ||
+            !user.verificationTokenExpiresAt ||
+            user.verificationTokenExpiresAt < Date.now()
+        ) {
+            return res.status(400).json({ message: "Invalid or expired OTP." });
+        }
+
+        user.isVerified = true;
+        user.verificationToken = undefined;
+        user.verificationTokenExpiresAt = undefined;
+
+        await user.save();
+        sendVerificationConfrmEmail(user.email,user)
+        res.status(200).json({ message: "Account verified successfully." });
+
+    } catch (error) {
+        console.error("Verification error:", error);
+        res.status(500).json({ message: "Server error." });
+    }
+});
+
 
 
 module.exports = router;
