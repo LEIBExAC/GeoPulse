@@ -2,6 +2,7 @@ const { JWT_SECRET } = require("./keys");
 const jwt= require("jsonwebtoken");
 
 
+
 const generateTokenAndSetCookie =(res,userId)=>{
     const token = jwt.sign({userId}, JWT_SECRET ,{ expiresIn:"7d"});
     res.cookie("token", token, {
