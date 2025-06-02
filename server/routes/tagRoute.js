@@ -1,8 +1,18 @@
 const express = require("express");
-const router = express.Router();
-const { verifyToken, authorizeRoles } = require("../middlewares/verifyToken");
-const tagController = require("../controller/tagController");
 const { body } = require("express-validator");
+const middleware = require("../middlewares/verifyToken.js");
+const {
+  createTag,
+  getMyTags,
+  getTagById,
+  updateTag,
+  deleteTag,
+  shareTag,
+  unshareTag,
+} = require("../controller/tagController.js");
+
+const router = express.Router();
+const { verifyToken, authorizeRoles } = middleware;
 
 // Add Tag
 router.post(
@@ -13,16 +23,16 @@ router.post(
     body("name").notEmpty().withMessage("Tag name is required"),
     body("tagId").notEmpty().withMessage("Tag ID is required"),
   ],
-  tagController.createTag
+  createTag
 );
 
-router.get("/", verifyToken, tagController.getMyTags);
-router.get("/:id", verifyToken, tagController.getTagById);
-router.put("/:id", verifyToken, tagController.updateTag);
-router.delete("/:id", verifyToken, tagController.deleteTag);
+router.get("/", verifyToken, getMyTags);
+router.get("/:id", verifyToken, getTagById);
+router.put("/:id", verifyToken, updateTag);
+router.delete("/:id", verifyToken, deleteTag);
 
 // Share/Unshare of tag
-router.put("/:id/share", verifyToken, tagController.shareTag);
-router.put("/:id/unshare", verifyToken, tagController.unshareTag);
+router.put("/:id/share", verifyToken, shareTag);
+router.put("/:id/unshare", verifyToken, unshareTag);
 
 module.exports = router;

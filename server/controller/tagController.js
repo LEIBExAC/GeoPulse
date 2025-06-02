@@ -1,21 +1,14 @@
-import {
-  findOne,
-  create,
-  find,
-  findById,
-  findByIdAndUpdate,
-  findByIdAndDelete,
-} from "../models/tag.js";
-
-import User from "../models/user";
+const Tag = require("../models/tag.js");
 
 // New tag
-export async function createTag(req, res) {
+async function createTag(req, res) {
+  console.log("createTag function called");
   try {
     const { name, tagId } = req.body;
-    const existing = await findOne({ tagId });
+    const existing = await Tag.findOne({ tagId });
     if (existing) return res.status(400).json({ error: "Tag already exists" });
-    const tag = await create({
+
+    const tag = await Tag.create({
       name,
       tagId,
       owner: req.user.userId,
@@ -28,12 +21,14 @@ export async function createTag(req, res) {
 }
 
 // Tags owned or shared with the user
-export async function getMyTags(req, res) {
+async function getMyTags(req, res) {
   try {
     const userId = req.user.userId;
-    const tags = await find({
+    console.log("getMyTags function called for userId:", userId);
+    const tags = await Tag.find({
       $or: [{ owner: userId }, { sharedWith: userId }],
     }).populate("owner", "name email");
+
     res.json(tags);
   } catch (err) {
     res.status(500).json({ error: "Server error" });
@@ -41,21 +36,23 @@ export async function getMyTags(req, res) {
 }
 
 // Single tag
-export async function getTagById(req, res) {
+async function getTagById(req, res) {
+  console.log("getTagById function called");
   try {
-    const tag = await findById(req.params.id);
+    const tag = await Tag.findOne({tagId: req.params.id});
     if (!tag) return res.status(404).json({ error: "Tag not found" });
     res.json(tag);
   } catch (err) {
+    console.error("Error in getTagById:", err);
     res.status(500).json({ error: "Server error" });
   }
 }
 
 // Update tag
-export async function updateTag(req, res) {
+async function updateTag(req, res) {
   try {
     const updates = req.body;
-    const tag = await findByIdAndUpdate(req.params.id, updates, {
+    const tag = await Tag.findOneAndUpdate({tagId: req.params.id}, updates, {
       new: true,
     });
     if (!tag) return res.status(404).json({ error: "Tag not found" });
@@ -66,9 +63,9 @@ export async function updateTag(req, res) {
 }
 
 // Delete tag
-export async function deleteTag(req, res) {
+async function deleteTag(req, res) {
   try {
-    const tag = await findByIdAndDelete(req.params.id);
+    const tag = await Tag.findOneAndDelete({tagId: req.params.id});
     if (!tag) return res.status(404).json({ error: "Tag not found" });
     res.json({ message: "Tag deleted" });
   } catch (err) {
@@ -77,11 +74,12 @@ export async function deleteTag(req, res) {
 }
 
 // Share tag
-export async function shareTag(req, res) {
+async function shareTag(req, res) {
   try {
     const { userIdToShare } = req.body;
-    const tag = await findById(req.params.id);
+    const tag = await Tag.findOne({tagId: req.params.id});
     if (!tag) return res.status(404).json({ error: "Tag not found" });
+
     if (!tag.sharedWith.includes(userIdToShare)) {
       tag.sharedWith.push(userIdToShare);
       await tag.save();
@@ -94,11 +92,15 @@ export async function shareTag(req, res) {
 }
 
 // Unshare tag
-export async function unshareTag(req, res) {
+async function unshareTag(req, res) {
   try {
     const { userIdToRemove } = req.body;
-    const tag = await findById(req.params.id);
+    if (!userIdToRemove) {
+      return res.status(400).json({ error: "User ID to remove is required" });
+    }
+    const tag = await Tag.findOne({tagId: req.params.id});
     if (!tag) return res.status(404).json({ error: "Tag not found" });
+
     tag.sharedWith = tag.sharedWith.filter(
       (id) => id.toString() !== userIdToRemove
     );
@@ -109,3 +111,14 @@ export async function unshareTag(req, res) {
     res.status(500).json({ error: "Server error" });
   }
 }
+
+module.exports = {
+  createTag,
+  getMyTags,
+  getTagById,
+  updateTag,
+  deleteTag,
+  shareTag,
+  unshareTag,
+};
+// This code defines the tag controller for managing tags in a Node.js application.
