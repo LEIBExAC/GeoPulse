@@ -5,7 +5,8 @@ const {JWT_SECRET} = require("../utility/keys")
 const generateTokenAndSetCookie = require("../utility/generateTokenAndSetCookie")
 const { sendVerificationEmail, sendVerificationConfrmEmail,sendPasswordResetEmail} = require("../config/emailSender")
 const jwt = require("jsonwebtoken");
-const verifyToken = require("../middlewares/verifyToken");
+const {verifyToken} = require("../middlewares/verifyToken");
+
 
 const router = express.Router();
 
@@ -35,7 +36,7 @@ router.post("/signup", async (req, res) => {
                 await existingUser.save(); // Important!
 
                 sendVerificationEmail(email, newVerificationToken);
-                generateTokenAndSetCookie(res, existingUser._id);
+                generateTokenAndSetCookie(res, existingUser._id, existingUser);
                 return res.status(200).json({ message: "Verification email is resent" });
 
             }
@@ -58,7 +59,7 @@ router.post("/signup", async (req, res) => {
 
         savedUser = await user.save();
         sendVerificationEmail(email, verificationToken)
-        generateTokenAndSetCookie(res, savedUser._id);
+        generateTokenAndSetCookie(res, savedUser._id, savedUser);
 
         res.status(201).json({ message: 'Signup successful', savedUser });
     }
@@ -140,7 +141,7 @@ router.post("/signin" ,async(req,res)=>{
          if (!isMatch) {
             return res.status(401).json({ message: "Invalid credentials" });
         }
-        generateTokenAndSetCookie(res, user._id);
+        generateTokenAndSetCookie(res, user._id, user);
         res.status(200).json({ message: "Signin successful", user });
 
     }
