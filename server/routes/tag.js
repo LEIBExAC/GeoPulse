@@ -42,6 +42,17 @@ router.post("/tag/register", verifyToken, async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 });
+router.post("/tag/activate", verifyToken, async (req, res) => {
+    try {
+       const {activationCode , tagId} = req.body;
+        const user = await USER.findById(req.userId);
+
+        
+    } catch (error) {
+        console.error("Tag Activation error:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+});
 
 
 module.exports = router;

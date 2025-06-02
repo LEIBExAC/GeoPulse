@@ -56,10 +56,11 @@ const tagSchema = new mongoose.Schema({
     type: Date,
   },
   manufacturingDate:{
-    type:String,
+    type:Date,
   },
   activationStatus:{
     type:Boolean,
+    default:false
   },
   activationCode:{
     type:String,
