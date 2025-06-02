@@ -1,49 +1,48 @@
-const mongoose = require("mongoose");
-const { Schema, model } = mongoose;
+const mongoose = require('mongoose');
 
-const tagSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
+const tagSchema = new mongoose.Schema({
   tagId: {
     type: String,
-    required: true,
-    unique: true,
+    unique: true, // Unique identifier from device (e.g., MAC)
+  },
+  name: {
+    type: String,
   },
   owner: {
-    type: Schema.Types.ObjectId,
-    ref: "USER",
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'USER',
   },
-  sharedWith: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "USER",
-    },
-  ],
+  sharedWith: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'USER',
+  }],
   battery: {
     type: Number,
+    min: 0,
+    max: 100,
     default: 100,
   },
   status: {
     type: String,
-    enum: ["online", "offline", "lost"],
-    default: "offline",
+    enum: ['online', 'offline', 'lost'],
+    default: 'offline',
+  },
+  lastSeen: {
+    type: Date,
+    default: Date.now,
   },
   location: {
     type: {
       type: String,
-      enum: ["Point"],
-      default: "Point",
+      enum: ['Point'],
+      required: true,
+      default: 'Point',
     },
     coordinates: {
-      type: [Number],
+      type: [Number], // [longitude, latitude]
+      required: true,
       default: [0, 0],
     },
-  },
-  lastSeen: {
-    type: Date,
   },
   ringStatus: {
     type: Boolean,
@@ -53,12 +52,27 @@ const tagSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  createdAt: {
+  activationDate: {
     type: Date,
-    default: Date.now,
   },
+  manufacturingDate:{
+    type:String,
+  },
+  activationStatus:{
+    type:Boolean,
+  },
+  activationCode:{
+    type:String,
+  }
 });
 
-tagSchema.index({ location: "2dsphere" });
+// 2dsphere index for geolocation queries
+tagSchema.index({ location: '2dsphere' });
 
-module.exports = model("Tag", tagSchema);
+// Index for lastSeen to help with cleanup/alerts
+tagSchema.index({ lastSeen: 1 });
+
+// Index for owner
+tagSchema.index({ owner: 1 });
+
+module.exports = mongoose.model('TAG', tagSchema);
