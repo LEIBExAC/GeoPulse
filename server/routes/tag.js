@@ -43,5 +43,43 @@ router.post("/tag/register", verifyToken, async (req, res) => {
     }
 });
 
+router.post('/tag/activate', verifyToken, async (req, res) => {
+  const { tagId, activationCode } = req.body;
+
+  try {
+    if (!activationCode || !tagId) {
+      return res.status(400).json({ error: 'Tag ID and Activation Code are required.' });
+    }
+
+    const tag = await TAG.findOne({ tagId });
+
+    if (!tag) {
+      return res.status(404).json({ error: 'Tag not found with provided tag ID.' });
+    }
+
+    if (tag.owner) {
+      return res.status(400).json({ error: 'This tag is already activated.' });
+    }
+
+    if (tag.activationCode !== activationCode) {
+      return res.status(400).json({ error: 'Invalid activation code.' });
+    }
+
+    // Activate and assign tag
+    tag.owner = req.userId; // set by verifyToken middleware
+    tag.activationDate = new Date();
+    tag.activationStatus = true;
+    tag.activationCode = undefined; // prevent reuse
+
+    await tag.save();
+
+    return res.status(200).json({ message: 'Tag activated successfully.', tag });
+
+  } catch (err) {
+    console.error('Tag activation error:', err.message);
+    return res.status(500).json({ error: 'Internal server error.' });
+  }
+});
+
 
 module.exports = router;
