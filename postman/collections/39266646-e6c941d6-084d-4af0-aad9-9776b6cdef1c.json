@@ -6,6 +6,11 @@
 	},
 	"item": [
 		{
+			"name": "New Folder",
+			"item": [],
+			"id": "39266646-45943f3c-0b11-49d4-b0c4-342fc6b9d4d7"
+		},
+		{
 			"name": "SignUp Route",
 			"id": "39266646-0f8bdc5d-8216-4914-8ee8-e89bfa7cde57",
 			"protocolProfileBehavior": {
