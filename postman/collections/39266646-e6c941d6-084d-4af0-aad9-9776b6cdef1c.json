@@ -356,77 +356,77 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Share the tag",
+					"id": "39266646-917625dc-cd3e-4696-94b1-57a17e2d0268",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\":\"684194cfd805292251763453\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/tag/684196c6d80529225176346a/share",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tag",
+								"684196c6d80529225176346a",
+								"share"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unshare the tag",
+					"id": "39266646-7549e81d-61da-4b05-be78-d54918b0bdb7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\":\"684194cfd805292251763453\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/tag/684196c6d80529225176346a/unshare",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tag",
+								"684196c6d80529225176346a",
+								"unshare"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "39266646-c83a0c47-e9ce-4224-b9fe-a95a197c16c7"
-		},
-		{
-			"name": "unshare the tag",
-			"id": "39266646-7549e81d-61da-4b05-be78-d54918b0bdb7",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"userId\":\"684194cfd805292251763453\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/tag/684196c6d80529225176346a/unshare",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"tag",
-						"684196c6d80529225176346a",
-						"unshare"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Share the tag",
-			"id": "39266646-917625dc-cd3e-4696-94b1-57a17e2d0268",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"userId\":\"684194cfd805292251763453\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/tag/684196c6d80529225176346a/share",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"tag",
-						"684196c6d80529225176346a",
-						"share"
-					]
-				}
-			},
-			"response": []
 		}
 	]
 }
