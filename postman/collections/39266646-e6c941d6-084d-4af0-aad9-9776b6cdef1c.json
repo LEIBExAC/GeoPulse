@@ -1,0 +1,420 @@
+{
+	"info": {
+		"_postman_id": "39266646-e6c941d6-084d-4af0-aad9-9776b6cdef1c",
+		"name": "GeoPulse",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SignUp Route",
+			"id": "39266646-0f8bdc5d-8216-4914-8ee8-e89bfa7cde57",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Mohit Soni\",\r\n    \"email\": \"new@gmail.com\",\r\n    \"password\":\"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "verify OTP at signup",
+			"id": "39266646-36f4ed06-5940-4ade-bba8-a7221ae9d818",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODQxOTdkMmQ4MDUyOTIyNTE3NjM0NzkiLCJpYXQiOjE3NDkxMjkxNzAsImV4cCI6MTc0OTczMzk3MH0.cU9phlbP_KuDYumn0LsnCpBQZ-THn1CcpbcA1Pt4z5Q",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"otp\" : \"342311\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/verify-otp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"verify-otp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signin",
+			"id": "39266646-13a21418-0fb6-406a-be26-1d02a9864032",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\r\n//     \"email\" : \"mohitsonip1847@gmail.com\",\r\n//     \"password\" : \"321\"\r\n// }\r\n// {\r\n//     \"email\":\"soni.mohit0413@gmail.com\",\r\n//     \"password\":\"password\"\r\n// }\r\n{\r\n    \"email\":\"new@gmail.com\",\r\n    \"password\":\"password\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Reset OTP",
+			"id": "39266646-da3d6f2c-e679-489f-9b8b-852a28bf3984",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"mohitsonip1847@gmail.com\",\r\n    \"otp\":\"621565\",\r\n    \"newPassword\" : \"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/verify-reset-otp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"verify-reset-otp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request reset OTP",
+			"id": "39266646-11876900-63f0-4400-a444-70946900afe9",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"mohitsonip1847@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/request-reset-otp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"request-reset-otp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change Password",
+			"id": "39266646-0cd72583-2f8f-4008-883e-5bf4f5e00c19",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODNiNzAyNzllZmE1YTE1MzEwNmQxNDgiLCJpYXQiOjE3NDg3Nzc5NDQsImV4cCI6MTc0OTM4Mjc0NH0.lCSq2Cu1k7lEauqKvF8_ixYCSxi5O10K_LVwC7eDnLM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\":\"123\",\r\n    \"newPassword\" : \"321\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/change-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"change-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tag Activation Route",
+			"id": "39266646-1a72f580-cf7f-43d8-b2ff-cec2220a8c18",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"activationCode\" : \"35017203\",\r\n    \"tagId\" : \"ThisTagId4\" \r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/tag/activate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tag",
+						"activate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tag Create by admin",
+			"id": "39266646-e46314fb-21b2-4af3-9052-e87aae97e94e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"tagId\" : \"ThisTagId4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/tag/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tag",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "My All tags ",
+			"id": "39266646-5d923eb7-f446-47d7-96d1-5145f9db4a37",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/tags/owned/684194cfd805292251763453",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tags",
+						"owned",
+						"684194cfd805292251763453"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch tags shared with me",
+			"id": "39266646-d527cb9e-5abd-49b8-8f9e-7d250c34d076",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/tags/shared-with-me",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tags",
+						"shared-with-me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "view particular tag details",
+			"id": "39266646-ed364dbd-ae99-4692-a6e5-278182cd5de4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/tag/684196b6d805292251763460",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tag",
+						"684196b6d805292251763460"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "unshare the tag",
+			"id": "39266646-7549e81d-61da-4b05-be78-d54918b0bdb7",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\":\"684194cfd805292251763453\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/tag/684196c6d80529225176346a/unshare",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tag",
+						"684196c6d80529225176346a",
+						"unshare"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Share the tag",
+			"id": "39266646-917625dc-cd3e-4696-94b1-57a17e2d0268",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\":\"684194cfd805292251763453\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/tag/684196c6d80529225176346a/share",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tag",
+						"684196c6d80529225176346a",
+						"share"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
