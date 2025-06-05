@@ -4,7 +4,6 @@ const USER = require("../models/user");
 const TAG = require("../models/tag");
 
 
-
 const router = express.Router();
 
 //tag registration by admin
@@ -86,7 +85,7 @@ router.get('/tags/owned/:id', verifyToken, async (req, res) => {
   try {
     // Authorization check
     if (req.userId != userId && req.role !== "admin") {
-      return res.status(403).json({ message: "You don't have permission to access these tags." });
+      return res.status(403).json({ message: "You don't have permission to access other owner tags." });
     }
 
     // Fetch all tags belonging to this user
@@ -113,29 +112,32 @@ router.get('/tags/shared-with-me', verifyToken, async (req, res) => {
     res.status(500).json({ error: 'Internal server error.' });
   }
 });
-router.get('/tags/user/:id', verifyToken, async (req, res) => {
+router.get('/tag/:id', verifyToken, async (req, res) => {
   const { id } = req.params;
 
-  // Check if the logged-in user is either the same user or an admin
-  if (req.userId !== id && req.role !== 'admin') {
-    return res.status(403).json({ message: "You don't have permission to access these tags." });
-  }
-
   try {
-    // Fetch tags where user is either owner or in sharedWith
-    const tags = await TAG.find({
-      $or: [
-        { owner: id },
-        { sharedWith: id }
-      ]
-    })
-    .populate('owner', 'name email')
-    .populate('sharedWith', 'name email');
+    const tag = await TAG.findById(id)
+      .populate('owner', 'name email')
+      .populate('sharedWith', 'name email');
 
-    return res.status(200).json(tags);
-  } catch (err) {
-    console.error('Error fetching tags:', err);
-    return res.status(500).json({ error: 'Internal server error.' });
+    if (!tag) {
+      return res.status(404).json({ message: 'Tag not found.' });
+    }
+
+    const userId = req.userId.toString();
+    const isOwner = tag.owner?._id.toString() === userId;
+    const isShared = tag.sharedWith.some(user => user._id.toString() === userId);
+    const isAdmin = req.role === 'admin';
+
+    if (!isOwner && !isShared && !isAdmin) {
+      return res.status(403).json({ message: "You don't have permission to view this tag." });
+    }
+
+    return res.status(200).json(tag);
+
+  } catch (error) {
+    console.error('Error fetching tag:', error);
+    return res.status(500).json({ message: 'Internal server error.' });
   }
 });
 
