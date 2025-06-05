@@ -141,79 +141,79 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Request reset OTP",
+					"id": "39266646-11876900-63f0-4400-a444-70946900afe9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"mohitsonip1847@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/request-reset-otp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"request-reset-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change Password",
+					"id": "39266646-0cd72583-2f8f-4008-883e-5bf4f5e00c19",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODNiNzAyNzllZmE1YTE1MzEwNmQxNDgiLCJpYXQiOjE3NDg3Nzc5NDQsImV4cCI6MTc0OTM4Mjc0NH0.lCSq2Cu1k7lEauqKvF8_ixYCSxi5O10K_LVwC7eDnLM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"123\",\r\n    \"newPassword\" : \"321\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/change-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"change-password"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "39266646-45943f3c-0b11-49d4-b0c4-342fc6b9d4d7"
-		},
-		{
-			"name": "Request reset OTP",
-			"id": "39266646-11876900-63f0-4400-a444-70946900afe9",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\" : \"mohitsonip1847@gmail.com\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/request-reset-otp",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"request-reset-otp"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "change Password",
-			"id": "39266646-0cd72583-2f8f-4008-883e-5bf4f5e00c19",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Cookie",
-						"value": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODNiNzAyNzllZmE1YTE1MzEwNmQxNDgiLCJpYXQiOjE3NDg3Nzc5NDQsImV4cCI6MTc0OTM4Mjc0NH0.lCSq2Cu1k7lEauqKvF8_ixYCSxi5O10K_LVwC7eDnLM",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"password\":\"123\",\r\n    \"newPassword\" : \"321\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/change-password",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"change-password"
-					]
-				}
-			},
-			"response": []
 		},
 		{
 			"name": "Tag Activation Route",
