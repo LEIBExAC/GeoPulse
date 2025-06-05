@@ -216,100 +216,101 @@
 			"id": "39266646-45943f3c-0b11-49d4-b0c4-342fc6b9d4d7"
 		},
 		{
-			"name": "New Folder",
-			"item": [],
+			"name": "Tag Related Routes",
+			"item": [
+				{
+					"name": "Tag Activation Route",
+					"id": "39266646-1a72f580-cf7f-43d8-b2ff-cec2220a8c18",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"activationCode\" : \"35017203\",\r\n    \"tagId\" : \"ThisTagId4\" \r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/tag/activate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tag",
+								"activate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tag Create by admin",
+					"id": "39266646-e46314fb-21b2-4af3-9052-e87aae97e94e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tagId\" : \"ThisTagId4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/tag/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tag",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "My All tags ",
+					"id": "39266646-5d923eb7-f446-47d7-96d1-5145f9db4a37",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/tags/owned/684194cfd805292251763453",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tags",
+								"owned",
+								"684194cfd805292251763453"
+							]
+						}
+					},
+					"response": []
+				}
+			],
 			"id": "39266646-c83a0c47-e9ce-4224-b9fe-a95a197c16c7"
-		},
-		{
-			"name": "Tag Activation Route",
-			"id": "39266646-1a72f580-cf7f-43d8-b2ff-cec2220a8c18",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"activationCode\" : \"35017203\",\r\n    \"tagId\" : \"ThisTagId4\" \r\n\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/tag/activate",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"tag",
-						"activate"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Tag Create by admin",
-			"id": "39266646-e46314fb-21b2-4af3-9052-e87aae97e94e",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"tagId\" : \"ThisTagId4\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/tag/register",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"tag",
-						"register"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "My All tags ",
-			"id": "39266646-5d923eb7-f446-47d7-96d1-5145f9db4a37",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/tags/owned/684194cfd805292251763453",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"tags",
-						"owned",
-						"684194cfd805292251763453"
-					]
-				}
-			},
-			"response": []
 		},
 		{
 			"name": "Fetch tags shared with me",
