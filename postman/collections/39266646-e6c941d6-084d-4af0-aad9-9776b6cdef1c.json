@@ -308,57 +308,57 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Fetch tags shared with me",
+					"id": "39266646-d527cb9e-5abd-49b8-8f9e-7d250c34d076",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/tags/shared-with-me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tags",
+								"shared-with-me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "view particular tag details",
+					"id": "39266646-ed364dbd-ae99-4692-a6e5-278182cd5de4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/tag/684196b6d805292251763460",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tag",
+								"684196b6d805292251763460"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "39266646-c83a0c47-e9ce-4224-b9fe-a95a197c16c7"
-		},
-		{
-			"name": "Fetch tags shared with me",
-			"id": "39266646-d527cb9e-5abd-49b8-8f9e-7d250c34d076",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/tags/shared-with-me",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"tags",
-						"shared-with-me"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "view particular tag details",
-			"id": "39266646-ed364dbd-ae99-4692-a6e5-278182cd5de4",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/tag/684196b6d805292251763460",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"tag",
-						"684196b6d805292251763460"
-					]
-				}
-			},
-			"response": []
 		},
 		{
 			"name": "unshare the tag",
