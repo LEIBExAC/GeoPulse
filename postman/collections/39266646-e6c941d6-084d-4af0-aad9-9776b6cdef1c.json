@@ -216,6 +216,11 @@
 			"id": "39266646-45943f3c-0b11-49d4-b0c4-342fc6b9d4d7"
 		},
 		{
+			"name": "New Folder",
+			"item": [],
+			"id": "39266646-c83a0c47-e9ce-4224-b9fe-a95a197c16c7"
+		},
+		{
 			"name": "Tag Activation Route",
 			"id": "39266646-1a72f580-cf7f-43d8-b2ff-cec2220a8c18",
 			"protocolProfileBehavior": {
