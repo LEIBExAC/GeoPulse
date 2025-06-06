@@ -9,7 +9,8 @@ const port = 8080;
 app.use(express.json())
 app.use(cookieParser()); 
 app.use(require("./routes/auth"))
-app.use("/tags", require("./routes/tagRoute"));
+app.use(require("./routes/tag"));
+app.use("/location", require("./routes/location"))
 
 
 app.listen(port , (req,res)=>{
