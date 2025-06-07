@@ -1,3 +1,7 @@
+/**
+ * This file is not used but I'm leaving it here, if in case it is required in future.
+ */
+
 const Tag = require("../models/tag.js");
 
 // New tag

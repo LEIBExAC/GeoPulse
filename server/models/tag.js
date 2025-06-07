@@ -4,6 +4,7 @@ const tagSchema = new mongoose.Schema({
   tagId: {
     type: String,
     unique: true, // Unique identifier from device (e.g., MAC)
+    required: true,
   },
   name: {
     type: String,

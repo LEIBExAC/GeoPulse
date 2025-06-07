@@ -1,5 +1,6 @@
 const Location = require("../models/location");
 const Tag = require("../models/tag");
+const { simplifyPath } = require("../utility/simplifyPath");
 
 /**
  * @desc Location updation endpoint, retrival endpoint.
@@ -37,7 +38,8 @@ const updateLocation = async (req, res) => {
     }
 
     const tag = await Tag.findOne({ tagId });
-    if (!tag || !tag.isActive) {
+
+    if (!tag || !tag.activationStatus) {
       return res.status(404).json({ error: "Invalid or inactive tagId" });
     }
 
@@ -45,6 +47,7 @@ const updateLocation = async (req, res) => {
 
     const location = new Location({
       tagId,
+      tagPrimaryId: tag._id, // Store the primary ID of the tag for reference
       timestamp,
       coordinates: {
         type: "Point",
@@ -98,7 +101,7 @@ const getLatestLocation = async (req, res) => {
     }
 
     // Fetch latest loc from the snapshot in Tag
-    const latestLocation = {
+    let latestLocation = {
       coordinates: tag.location?.coordinates || [0, 0],
       battery: tag.battery,
       timestamp: tag.lastSeen,
@@ -182,7 +185,7 @@ const getLocationHistory = async (req, res) => {
     const locations = await Location.find({
       tagId,
       timestamp: { $gte: fromDate, $lte: toDate },
-    }).sort({ timestamp: 1 });
+    }).sort({ timestamp: -1 });
 
     return res.status(200).json({
       success: true,
@@ -204,6 +207,8 @@ const getLocationHistory = async (req, res) => {
 
 const getActiveTagsLatestLocations = async (req, res) => {
   try {
+    console.log("Active Tags Latest Locations Endpoint Hit");
+    
     if (req.role !== "admin") {
       return res.status(403).json({ success: false, message: "Access denied" });
     }
@@ -234,9 +239,92 @@ const getActiveTagsLatestLocations = async (req, res) => {
   }
 };
 
+const getOptimizedPath = async (req, res) => {
+  try {
+    const { tagId } = req.params;
+    const { from, to, points = 200 } = req.query;
+
+    if (!from || !to) {
+      return res
+        .status(400)
+        .json({ error: "from and to timestamps are required" });
+    }
+
+    const tag = await Tag.findOne({ tagId });
+
+    if (!tag) return res.status(404).json({ error: "Tag not found" });
+
+    const isAdmin = req.role === "admin";
+    const isOwner = tag.owner?.toString() === req.userId;
+    const isShared = tag.sharedWith?.some((id) => id.toString() === req.userId);
+
+    if (!isAdmin && !isOwner && !isShared) {
+      return res.status(403).json({ success: false, message: "Access denied" });
+    }
+
+    const fromDate = new Date(from);
+    const toDate = new Date(to);
+
+    if (isNaN(fromDate.getTime()) || isNaN(toDate.getTime())) {
+      return res.status(400).json({ error: "Invalid from or to date format" });
+    }
+
+    if (fromDate >= toDate) {
+      return res
+        .status(400)
+        .json({ error: "from date must be before to date" });
+    }
+
+    const locations = await Location.find({
+      tagId,
+      timestamp: { $gte: fromDate, $lte: toDate },
+    }).sort({ timestamp: 1 });
+
+    const totalPoints = locations.length;
+
+    if (totalPoints === 0) {
+      return res.json({
+        tagId,
+        from,
+        to,
+        totalPoints: 0,
+        returnedPoints: 0,
+        path: [],
+      });
+    }
+
+    const maxPoints = Math.min(parseInt(points), 1000);
+
+    const simplified = simplifyPath(locations, maxPoints);
+
+    const path = simplified.map((loc) => ({
+      coordinates: loc.coordinates.coordinates,
+      timestamp: loc.timestamp,
+      battery: loc.battery,
+      speed: loc.speed,
+    }));
+
+    return res.status(200).json({
+      success: true,
+      tagId,
+      from,
+      to,
+      totalPoints,
+      returnedPoints: path.length,
+      path,
+    });
+  } catch (err) {
+    console.error("Error in getOptimizedPath:", err);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+};
+
 module.exports = {
   updateLocation,
   getLatestLocation,
   getLocationHistory,
   getActiveTagsLatestLocations,
+  getOptimizedPath,
 };

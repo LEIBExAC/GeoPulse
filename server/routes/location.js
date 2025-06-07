@@ -5,6 +5,7 @@ const {
   getLatestLocation,
   getLocationHistory,
   getActiveTagsLatestLocations,
+  getOptimizedPath,
 } = require("../controller/locationController");
 const verifyToken = require("../middlewares/verifyToken");
 
@@ -19,5 +20,8 @@ router.get("/:tagId/history", verifyToken, getLocationHistory);
 
 // GET - Get latest locations of all active tags
 router.get("/active-tags", verifyToken, getActiveTagsLatestLocations);
+
+// GET - Get optimized path for a tag
+router.get("/:tagId/path", verifyToken, getOptimizedPath);
 
 module.exports = router;

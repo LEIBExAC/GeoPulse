@@ -1,9 +1,13 @@
 const mongoose = require("mongoose");
 
 const locationSchema = new mongoose.Schema({
-  tagId: {
+  tagPrimaryId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "TAG", // Refers to the Tags collection
+    required: true,
+  },
+  tagId: {
+    type: String,
     required: true,
   },
   timestamp: {
