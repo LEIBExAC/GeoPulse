@@ -5,7 +5,7 @@ const {JWT_SECRET} = require("../utility/keys")
 const generateTokenAndSetCookie = require("../utility/generateTokenAndSetCookie")
 const { sendVerificationEmail, sendVerificationConfrmEmail,sendPasswordResetEmail} = require("../config/emailSender")
 const jwt = require("jsonwebtoken");
-const {verifyToken} = require("../middlewares/verifyToken");
+const verifyToken = require("../middlewares/verifyToken");
 
 
 const router = express.Router();
