@@ -11,6 +11,7 @@ app.use(cookieParser());
 app.use(require("./routes/auth"))
 app.use(require("./routes/tag"));
 app.use("/location", require("./routes/location"))
+app.use("/geofence", require("./routes/geofence"));
 
 
 app.listen(port , (req,res)=>{

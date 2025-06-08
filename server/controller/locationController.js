@@ -111,7 +111,6 @@ const getLatestLocation = async (req, res) => {
     };
 
     // Check if fallback is needed
-    // If the tag's location is not set or is at default coordinates (0,0) or lastSeen is not set
     const isFallbackNeeded =
       !tag.location?.coordinates ||
       (tag.location.coordinates[0] === 0 &&

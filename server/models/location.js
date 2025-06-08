@@ -9,6 +9,7 @@ const locationSchema = new mongoose.Schema({
   tagId: {
     type: String,
     required: true,
+    ref: "TAG",
   },
   timestamp: {
     type: Date,
@@ -40,10 +41,8 @@ const locationSchema = new mongoose.Schema({
   },
 });
 
-// Enable geospatial queries
 locationSchema.index({ coordinates: "2dsphere" });
 
-// Optional: Index on timestamp for fast recent lookups
 locationSchema.index({ timestamp: -1 });
 
 const Location = mongoose.model("LOCATION", locationSchema);
