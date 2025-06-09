@@ -213,7 +213,7 @@
 					"response": []
 				},
 				{
-					"name": "http://localhost:8080/logout",
+					"name": "Logout Route",
 					"id": "39266646-3b119929-4df1-4a57-84a5-3712992d70c8",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
