@@ -10,6 +10,8 @@ import AboutUs from './pages/common/AboutUs';
 import Contact from './pages/common/Contact';
 import Services from './pages/common/Services';
 import Feature from './pages/common/Feature';
+import UserDashboard from "./pages/user/UserDashboard"
+import AdminDashboard from "./pages/admin/AdminDashboard"
 
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
           <Route path="/about-us" element={<AboutUs/>} />
           <Route path="/contact" element={<Contact/>} />
           <Route path="/verify-email" element={<VerifyOTP/>} />
+          <Route path="/user-dashboard" element={<UserDashboard/>} />
+          <Route path="/admin-dashboard" element={<AdminDashboard/>} />
 
         </Routes>
       </BrowserRouter>

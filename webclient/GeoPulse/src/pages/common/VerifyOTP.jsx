@@ -51,15 +51,9 @@ export default function VerifyOTP() {
     const otpString = otp.join("");
     console.log("Entered OTP:", otpString);
 
-    try {
-      await verifyOtp(otp);
+   
 
-    }
-    catch (error) {
-      setOTPError(error)
-    }
-
-    const success = await login(otp)
+    const success = await verifyOtp(otpString)
     if (success) navigate("/signin")
 
 
