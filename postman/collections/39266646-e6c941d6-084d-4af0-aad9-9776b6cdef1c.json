@@ -237,6 +237,32 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Check Auth Route",
+					"id": "39266646-4a7fe0b5-c7de-48ff-a692-35ec21923de2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/check-auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"check-auth"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "39266646-45943f3c-0b11-49d4-b0c4-342fc6b9d4d7"
