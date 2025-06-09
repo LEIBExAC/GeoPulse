@@ -37,36 +37,36 @@ export const useAuthStore = create((set) => ({
     }
   },
 
- login: async (email, password) => {
-  set({ isLoading: true, error: null });
-  try {
-    const res = await fetch(`${backend_url}/signin`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ email, password }),
-    });
-
-    const data = await res.json();
-
-    if (res.ok && data.user) {
-      set({
-        user: data.user,
-        isAuthenticated: true,
-        isAdmin: data.user.role === 'admin',
+  login: async (email, password) => {
+    set({ isLoading: true, error: null });
+    try {
+      const res = await fetch(`${backend_url}/signin`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ email, password }),
       });
-      return true; // ✅ return success
-    } else {
-      set({ error: data.message || "Login failed" });
+
+      const data = await res.json();
+
+      if (res.ok && data.user) {
+        set({
+          user: data.user,
+          isAuthenticated: true,
+          isAdmin: data.user.role === 'admin',
+        });
+        return true; // ✅ return success
+      } else {
+        set({ error: data.message || "Login failed" });
+        return false;
+      }
+    } catch (err) {
+      set({ error: err.message || "Error logging in" });
       return false;
+    } finally {
+      set({ isLoading: false });
     }
-  } catch (err) {
-    set({ error: err.message || "Error logging in" });
-    return false;
-  } finally {
-    set({ isLoading: false });
-  }
-},
+  },
 
 
   verifyOtp: async (otp) => {
@@ -95,4 +95,65 @@ export const useAuthStore = create((set) => ({
       set({ isLoading: false });
     }
   },
+
+  checkAuth: async () => {
+  set({ isLoading: true, error: null });
+
+  try {
+    const res = await fetch(`${backend_url}/check-auth`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      // set({ error: data.message || "Failed to authenticate" });
+      return false;
+    }
+
+    // On success, update user and auth state (adjust based on your store structure)
+    set({ user: data.user, isAuthenticated: true });
+    if(data.user.role==="admin"){set({isAdmin:true})}
+    return true;
+
+  } catch (err) {
+    // set({ error: err.message || "Error in checking user" });
+    return false;
+  } finally {
+    set({ isLoading: false });
+  }
+},
+logout: async () => {
+  set({ isLoading: true });
+
+  try {
+    const res = await fetch(`${backend_url}/logout`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (res.ok) {
+      set({
+        user: null,
+        isAuthenticated: false,
+        isAdmin: false,
+        error: null,
+      });
+      return true;
+    } else {
+      const data = await res.json();
+      set({ error: data.message || "Logout failed" });
+      return false;
+    }
+  } catch (err) {
+    set({ error: err.message || "Error during logout" });
+    return false;
+  } finally {
+    set({ isLoading: false });
+  }
+}
+
+
 }));

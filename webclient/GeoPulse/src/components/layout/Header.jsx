@@ -1,17 +1,30 @@
+import React from "react";
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FaUser, FaLock } from 'react-icons/fa';
-import { Link } from 'react-router-dom'
+import { Link,Navigate,useNavigate} from 'react-router-dom'
 import { useAuthStore } from '../../assets/store/authStore';
 
 import "../../assets/styles/header.css"
 
 function Header() {
 
-    const { isAuthenticated, user, isAdmin } = useAuthStore();
+    const { isAuthenticated, user, isAdmin , logout} = useAuthStore();
+    const navigate = useNavigate();
+
+    const handleLogout=async()=>{
+        const success = await logout();
+        if(success){
+            alert("logout Succesful")
+            navigate("/",{replace:true})
+        }
+    }
+
+
+
     return (
         <Navbar expand="lg" style={{ backgroundColor: '#F9FAFB' }} className="shadow-sm py-2 ">
             <Container fluid>
@@ -36,7 +49,7 @@ function Header() {
                         {isAuthenticated && user?.isVerified ? (
                             <>
                                 <Nav.Item>
-                                    <Nav.Link as={Link} to="/" className="text-dark fw-medium mx-lg-1">Logout</Nav.Link>
+                                    <Button onClick={handleLogout} variant="outline-dark" className='fw-medium'>Logout</Button>
 
                                 </Nav.Item>
                                 <Nav.Item>

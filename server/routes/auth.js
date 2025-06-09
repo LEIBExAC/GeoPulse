@@ -230,4 +230,29 @@ router.post("/change-password", verifyToken, async (req, res) => {
     }
 });
 
+router.get("/check-auth",verifyToken,async(req,res)=>{
+	console.log("check auth routed hitted...")
+
+    try {
+		const user = await USER.findById(req.userId).select("-password");
+		if (!user) {
+			return res.status(400).json({ success: false, error:"User not found" });
+		}
+
+		res.status(200).json({ success: true, user });
+	} catch (error) {
+		console.log("Error in checkAuth ", error);
+		res.status(400).json({ success: false, message: error.message });
+	}
+})
+router.get("/logout", (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    sameSite: "Lax", // or "Strict" or "None" based on frontend domain and cross-site settings
+    // secure: process.env.NODE_ENV === "production", // only true in production
+    secure: false, // only true in production
+  });
+
+  res.status(200).json({ message: "Logged out successfully" });
+});
 module.exports = router;

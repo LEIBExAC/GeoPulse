@@ -11,3 +11,5 @@ router.post("/:tagId/create", verifyToken, createGeofence);
 
 // PUT - Update a geofence for a tag
 router.put("/:tagId/update", verifyToken, updateGeofence);
+
+
