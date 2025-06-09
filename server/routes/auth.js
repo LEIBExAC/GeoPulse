@@ -11,7 +11,7 @@ const verifyToken = require("../middlewares/verifyToken");
 const router = express.Router();
 
 router.post("/signup", async (req, res) => {
-    try {
+    try { 
 
 
         console.log("Signup Route Hitted ..")
@@ -25,7 +25,7 @@ router.post("/signup", async (req, res) => {
         if (existingUser) {
             if (existingUser.isVerified) {
                 return res.status(400).json({ message: "User already exists with this email" });
-            }
+            } 
             else {
                 const newVerificationToken = Math.floor(100000 + Math.random() * 900000).toString();
                 existingUser.verificationToken = newVerificationToken;
@@ -33,11 +33,11 @@ router.post("/signup", async (req, res) => {
                 existingUser.password = await bcrypt.hash(password, 10);
                 existingUser.verificationTokenExpiresAt = Date.now() + 5 * 60 * 1000; // 5 min
 
-                await existingUser.save(); // Important!
+                const savedUser = await existingUser.save(); // Important!
 
                 sendVerificationEmail(email, newVerificationToken);
                 generateTokenAndSetCookie(res, existingUser._id, existingUser);
-                return res.status(200).json({ message: "Verification email is resent" });
+                return res.status(200).json({ message: "Verification email is resent", savedUser});
 
             }
         }
