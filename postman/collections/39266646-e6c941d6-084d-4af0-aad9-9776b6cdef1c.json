@@ -211,6 +211,32 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "http://localhost:8080/logout",
+					"id": "39266646-3b119929-4df1-4a57-84a5-3712992d70c8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "39266646-45943f3c-0b11-49d4-b0c4-342fc6b9d4d7"
