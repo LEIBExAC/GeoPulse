@@ -1,14 +1,22 @@
 import React, { useState, useRef } from "react";
 import { Container, Card, Form, Button, Alert } from "react-bootstrap";
+import { Navigate, useNavigate, Link } from 'react-router-dom';
+
+
+import { useAuthStore } from "../../assets/store/authStore";
 
 export default function VerifyOTP() {
+  const navigate = useNavigate()
+
   const [otp, setOtp] = useState(new Array(6).fill(""));
-  const [error, setError] = useState("");
+  const [OTPerror, setOTPError] = useState("");
   const [info, setInfo] = useState(
     "We have sent a 6-digit OTP to your registered email or phone number."
   );
   const [resendDisabled, setResendDisabled] = useState(false);
   const inputsRef = useRef([]);
+
+  const { verifyOtp, error, isLoading } = useAuthStore();
 
   const handleChange = (element, index) => {
     const val = element.value;
@@ -31,17 +39,29 @@ export default function VerifyOTP() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (otp.some((digit) => digit === "")) {
-      setError("Please enter all 6 digits of the OTP.");
+      setOTPError("Please enter all 6 digits of the OTP.");
       return;
     }
 
-    setError("");
+    setOTPError("");
     const otpString = otp.join("");
     console.log("Entered OTP:", otpString);
+
+    try {
+      await verifyOtp(otp);
+
+    }
+    catch (error) {
+      setOTPError(error)
+    }
+
+    const success = await login(otp)
+    if (success) navigate("/signin")
+
 
     // TODO: Verify OTP with backend API here
 
@@ -60,7 +80,7 @@ export default function VerifyOTP() {
   };
 
   return (
-     <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+    <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
       <Card className="shadow-lg p-4" style={{ width: "100%", maxWidth: "420px" }}>
         <h3 className="text-center mb-3 text-primary">Verify Your Account</h3>
         <p className="text-center text-muted mb-4" style={{ fontSize: "0.9rem" }}>
@@ -68,6 +88,7 @@ export default function VerifyOTP() {
         </p>
 
         {error && <Alert variant="danger">{error}</Alert>}
+        {OTPerror && <Alert variant="danger">{OTPerror}</Alert>}
 
         <Form onSubmit={handleSubmit}>
           <div className="d-flex justify-content-between mb-4">

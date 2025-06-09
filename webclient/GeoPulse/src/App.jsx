@@ -1,19 +1,37 @@
 import { useState } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css'; // ✅ Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
 import Landing from './pages/common/Landing';
 import './App.css'
 import SignUp from './pages/common/Signup';
 import Login from './pages/common/Login';
 import VerifyOTP from './pages/common/VerifyOTP';
-function App() {
-  const [count, setCount] = useState(0)
+import { BrowserRouter, Routes, Route } from "react-router";
+import AboutUs from './pages/common/AboutUs';
+import Contact from './pages/common/Contact';
+import Services from './pages/common/Services';
+import Feature from './pages/common/Feature';
 
+
+function App() {
   return (
     <>
-      <div><Landing></Landing></div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Landing/>} />
+          <Route path="/signin" element={<Login/>} />
+          <Route path="/signup" element={<SignUp/>} />
+          <Route path="/features" element={<Feature/>} />
+          <Route path="/services" element={<Services/>} />
+          <Route path="/about-us" element={<AboutUs/>} />
+          <Route path="/contact" element={<Contact/>} />
+          <Route path="/verify-email" element={<VerifyOTP/>} />
+
+        </Routes>
+      </BrowserRouter>
+      {/* <div><Landing></Landing></div>
       <SignUp></SignUp>
       <Login></Login>      
-      <VerifyOTP></VerifyOTP>
+      <VerifyOTP></VerifyOTP> */}
     </>
   )
 }

@@ -1,12 +1,10 @@
 import React from 'react'
 import Header from '../../components/layout/Header'
-export default function Landing() {
+export default function Feature() {
   return (
     <>
-    <div>
-        <Header></Header>
-        Landing Page
-    </div>
+    <Header></Header>
+    <div>Feature</div>
     </>
   )
 }
