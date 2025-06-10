@@ -1,6 +1,7 @@
 const Location = require("../models/location");
 const Tag = require("../models/tag");
 const { simplifyPath } = require("../utility/simplifyPath");
+const alertController = require("../utility/createAlert");
 
 /**
  * @desc Location updation endpoint, retrival endpoint.
@@ -72,7 +73,8 @@ const updateLocation = async (req, res) => {
 
     await location.save();
 
-    // TODO: Optionally check geofencing logic here
+    // If the tag left the geofence or entered it after exit
+    alertController(tagId, latitude, longitude);
 
     return res.status(201).json({ success: true, data: location });
   } catch (err) {
@@ -207,7 +209,7 @@ const getLocationHistory = async (req, res) => {
 const getActiveTagsLatestLocations = async (req, res) => {
   try {
     console.log("Active Tags Latest Locations Endpoint Hit");
-    
+
     if (req.role !== "admin") {
       return res.status(403).json({ success: false, message: "Access denied" });
     }

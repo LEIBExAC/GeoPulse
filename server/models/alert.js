@@ -16,6 +16,7 @@ const alertSchema = new Schema({
     type: String,
     enum: ["entry", "exit"],
     required: true,
+    default: "entry",
   },
   location: {
     lat: { type: Number, required: true }, // Latitude of the breach location
@@ -27,7 +28,7 @@ const alertSchema = new Schema({
   },
   notifiedTo: [
     {
-      type: Schema.Types.ObjectId, // User(s) which are notified about the breach
+      type: Schema.Types.ObjectId,
       ref: "User",
     },
   ],
