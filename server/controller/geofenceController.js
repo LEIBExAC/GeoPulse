@@ -263,7 +263,7 @@ const getGeofenceById = async (req, res) => {
     if (!geofence) {
       return res.status(404).json({
         success: false,
-        message: "Geofence for this Tag is not found",
+        message: "Specified Geofence is not found",
       });
     }
 
@@ -442,6 +442,18 @@ const getGeofenceAlerts = async (req, res) => {
     const alerts = await Alert.find({ tagId })
       .populate("geofenceId", "type center radius vertices")
       .sort({ timestamp: -1 });
+
+    if (alerts.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No alerts found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      alerts,
+    });
   } catch (error) {
     console.error("Error fetching geofence alerts:", error);
     return res.status(500).json({

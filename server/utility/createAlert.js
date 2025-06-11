@@ -5,7 +5,7 @@ const { sendAlertNotification } = require("../utility/notificationService");
 
 const createAlert = async (tagId, latitude, longitude) => {
   try {
-    const previousAlert = await Alert.findOne({ tagId, timestamp: -1 });
+    let previousAlert = await Alert.findOne({ tagId, timestamp: -1 });
     if (!previousAlert) {
       previousAlert = { type: "entry" };
     }
@@ -51,10 +51,10 @@ const createAlert = async (tagId, latitude, longitude) => {
         await alert.save();
 
         await sendAlertNotification(alert);
-
-        return;
       }
     }
+
+    return;
   } catch (error) {
     console.error("Error in Sending/Updating Alert:", error);
   }

@@ -83,22 +83,22 @@ const sendPasswordResetEmail = async (user,otp,email) => {
 /**
  * @function sendAlert
  * @description Sends an alert email to the user.
- * @param  user
+ * @param  email
  * @param  message
  * @returns {Promise<void>}
  */
-const sendAlert = async (user, message) => {
+const sendAlert = async (email, message) => {
   try {
-    console.log("Sending alert notification to:", user.email);
+    console.log("Sending alert notification to:", email);
     const mailOptions = {
       from: `"${sender.name}" <${sender.email}>`,
-      to: user.email,
+      to: email,
       subject: "GeoPulse Alert Notification",
       text: message,
     };
 
     await transporter.sendMail(mailOptions);
-    console.log("Alert notification email sent to", user.email);
+    console.log("Alert notification email sent to", email);
   } catch (error) {
     console.error("Error sending alert notification email:", error);
   }

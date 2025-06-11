@@ -1,7 +1,7 @@
 const Location = require("../models/location");
 const Tag = require("../models/tag");
 const { simplifyPath } = require("../utility/simplifyPath");
-const alertController = require("../utility/createAlert");
+const { createAlert } = require("../utility/createAlert");
 
 /**
  * @desc Location updation endpoint, retrival endpoint.
@@ -74,7 +74,7 @@ const updateLocation = async (req, res) => {
     await location.save();
 
     // If the tag left the geofence or entered it after exit
-    alertController(tagId, latitude, longitude);
+    createAlert(tagId, latitude, longitude);
 
     return res.status(201).json({ success: true, data: location });
   } catch (err) {

@@ -19,20 +19,20 @@ router.post("/:tagId/create", verifyToken, createGeofence);
 router.put("/:tagId/:geofenceId/update", verifyToken, updateGeofence);
 
 // GET - Get all geofences for a tag
-router.get("/:tagId", getAllGeofencesForTag);
+router.get("/:tagId", verifyToken, getAllGeofencesForTag);
+
+router.get("/:tagId/alerts", verifyToken, getGeofenceAlerts);
 
 // GET - Get a specific geofence by ID for a tag
-router.get("/:tagId/:geofenceId", getGeofenceById);
+router.get("/:tagId/:geofenceId", verifyToken, getGeofenceById);
 
 // PUT - Enable a geofence for a tag
-router.put("/:tagId/:geofenceId/enable", enableGeofence);
+router.put("/:tagId/:geofenceId/enable", verifyToken, enableGeofence);
 
 // PUT - Disable a geofence for a tag
-router.put("/:tagId/:geofenceId/disable", disableGeofence);
+router.put("/:tagId/:geofenceId/disable", verifyToken, disableGeofence);
 
 // DELETE - Delete a geofence for a tag
-router.delete("/:tagId/:geofenceId/delete", deleteGeofence);
-
-router.get("/:tagId/alerts", getGeofenceAlerts);
+router.delete("/:tagId/:geofenceId/delete", verifyToken, deleteGeofence);
 
 module.exports = router;
