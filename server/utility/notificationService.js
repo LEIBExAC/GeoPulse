@@ -1,5 +1,5 @@
 const Tag = require("../models/tag");
-const User = require("../models/user");
+const Alert = require("../models/alert");
 const { sendAlert } = require("../config/emailSender");
 
 const sendAlertNotification = async (alert) => {
@@ -15,9 +15,11 @@ const sendAlertNotification = async (alert) => {
     const users = [usersToNotify.owner, ...usersToNotify.sharedWith];
 
     const userEmails = [];
+    const userIds = [];
     for (const user of users) {
-      if (user.email) {
+      if (user.email && user._id) {
         userEmails.push(user.email);
+        userIds.push(user._id);
       }
     }
     console.log("Valid user emails:", userEmails);
@@ -32,6 +34,12 @@ const sendAlertNotification = async (alert) => {
       console.log(`Sending notification to ${email}: ${message}`);
       await sendAlert(email, message);
     }
+
+    await Alert.findOneAndUpdate(
+      { _id: alert._id },
+      { $set: { notifiedTo: userIds } },
+      { sort: { timestamp: -1 } }
+    );
 
     console.log("Alert notification sent successfully to all users.");
     return;
