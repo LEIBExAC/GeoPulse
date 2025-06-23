@@ -1,0 +1,7 @@
+.welcome-box-user-dashboard {
+  max-width: 700px;
+  border-left: 5px solid #0b5ed7; /* Bootstrap primary */
+  background-color: #f8f9fa;
+  transition: all 0.3s ease;
+}
+    
