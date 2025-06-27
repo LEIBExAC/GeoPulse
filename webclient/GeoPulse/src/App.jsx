@@ -14,23 +14,26 @@ import Feature from './pages/common/Feature';
 import UserDashboard from "./pages/user/UserDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import PageNotFound from "./pages/common/PageNotFound";
+import AddTag from "./pages/user/AddTag";
+import MyTag from "./pages/user/MyTag";
+import Profile from "./pages/user/Profile";
 import { useAuthStore } from './assets/store/authStore';
 
 function App() {
-  const { user, isAdmin, checkAuth,isAuthenticated } = useAuthStore();
-  const [isLoading, setisLoading] = useState(false)
+  const { user, isAdmin, checkAuth,isAuthenticated} = useAuthStore();
+   const [loading, setLoading] = useState(true); // State to track loading
+
 
   useEffect(() => {
     const authenticate = async () => {
-      setisLoading(true)
       await checkAuth();
       console.log("Authentication check completed");
-      setisLoading(false)
+      setLoading(false)
     };
     authenticate();
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
 
 
   const ProtectedRoute = ({ children }) => {
@@ -65,7 +68,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="*" element={<PageNotFound />} />
         <Route path="/" element={<Landing />} />
         <Route path="/signin" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
@@ -88,6 +90,36 @@ function App() {
           }
         />
         <Route
+          path="/add-new-tag"
+          element={
+            <ProtectedRoute>
+              <UserRoute>
+                <AddTag/>
+              </UserRoute>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/my-tags"
+          element={
+            <ProtectedRoute>
+              <UserRoute>
+                <MyTag/>
+              </UserRoute>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <UserRoute>
+                <Profile/>
+              </UserRoute>
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/admin-dashboard"
           element={
             <ProtectedRoute>
@@ -97,6 +129,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+          <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
   );

@@ -116,10 +116,12 @@ export const useAuthStore = create((set) => ({
     // On success, update user and auth state (adjust based on your store structure)
     set({ user: data.user, isAuthenticated: true });
     if(data.user.role==="admin"){set({isAdmin:true})}
+    set({ isLoading: false });
     return true;
 
   } catch (err) {
     // set({ error: err.message || "Error in checking user" });
+    set({ isLoading: false });
     return false;
   } finally {
     set({ isLoading: false });
