@@ -19,15 +19,6 @@ function Header() {
 
     const navigate = useNavigate();
 
-    const handleLogout = async () => {
-        const success = await logout();
-        if (success) {
-            alert("logout Succesful")
-            setShowLogoutModal(false)
-            navigate("/", { replace: true })
-        }
-    }
-
 
 
     return (
