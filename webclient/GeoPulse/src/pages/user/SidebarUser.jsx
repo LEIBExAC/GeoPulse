@@ -25,7 +25,7 @@ export default function SidebarUser() {
             </div>
 
             {visible && (
-                <div className="sidebar-user d-flex flex-column">
+                <div className="sidebar-user d-flex flex-column ">
                     <div className="sidebar-user__section text-center mt-4">
                         <Link to="/profile" className="sidebar-user__profile-link">
                             <img

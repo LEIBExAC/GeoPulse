@@ -9,7 +9,7 @@ export default function MyTag() {
     <div className="d-flex align-items-start w-100">
       <SidebarUser />
 
-      <div className="w-100">
+     <div className="w-100" style={{ height: '100vh', overflowY: 'auto' }}>
         {/* Header */}
         <div className="d-flex justify-content-between align-items-center border-bottom bg-light dashboard-header pe-5">
           <div className="fw-semibold fs-5 ms-4 text-dark">GeoPulse</div>

@@ -9,7 +9,8 @@ export default function AddTag() {
     <div className="d-flex align-items-start w-100">
       <SidebarUser />
 
-      <div className="w-100">
+      <div className="w-100" style={{ height: '100vh', overflowY: 'auto' }}>
+        
         {/* Header */}
         <div className="d-flex justify-content-between align-items-center border-bottom bg-light dashboard-header pe-5">
           <div className="fw-semibold fs-5 ms-4 text-dark">GeoPulse</div>
@@ -22,7 +23,7 @@ export default function AddTag() {
         {/* Main Content */}
         <div className="dashboard-main-content ms-4 mt-4 me-4">
 
-         <div>Main content of Add tag code here</div>
+          <div>Main content of Add tag code here</div>
 
         </div>
       </div>
