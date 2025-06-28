@@ -4,6 +4,7 @@ import "../../assets/styles/user/dashboardRightContentCommon.css";
 import "../../assets/styles/user/HomeDashboard.css";
 import { useAuthStore } from '../../assets/store/authStore';
 import { FaBell } from "react-icons/fa";
+import { formatLastLogin } from '../../utility/formatLastLogin';
 
 export default function UserDashboard() {
   const {user} = useAuthStore();
@@ -36,7 +37,7 @@ export default function UserDashboard() {
                   Track your smart tags in real-time, set GeoFences, and manage devices seamlessly.
                 </p>
                 <div className="mt-3 d-flex flex-wrap gap-4 text-muted">
-                  <div><strong>Last Login:</strong> Today at 10:34 AM</div>
+                  <div><strong>Last Login:</strong> {formatLastLogin(user.lastLogin)}</div>
                   <div><strong>Role:</strong> User</div>
                   <div><strong>Device Connected:</strong> 3 Tags</div>
                 </div>

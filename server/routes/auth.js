@@ -141,7 +141,9 @@ router.post("/signin" ,async(req,res)=>{
          if (!isMatch) {
             return res.status(401).json({ message: "Invalid credentials" });
         }
+        user.lastLogin = new Date();
         generateTokenAndSetCookie(res, user._id, user);
+        await user.save();
         res.status(200).json({ message: "Signin successful", user });
 
     }
