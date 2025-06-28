@@ -7,7 +7,7 @@ import { FaBell } from "react-icons/fa";
 import { formatLastLogin } from '../../utility/formatLastLogin';
 
 export default function UserDashboard() {
-  const {user} = useAuthStore();
+  const { user } = useAuthStore();
   return (
     <div className="d-flex align-items-start w-100">
       {/* Sidebar */}
@@ -15,7 +15,7 @@ export default function UserDashboard() {
 
       {/* Right Panel */}
       <div className="w-100" style={{ height: '100vh', overflowY: 'auto' }}>
-        
+
         {/* Header */}
         <div className="d-flex justify-content-between align-items-center border-bottom bg-light dashboard-header pe-5">
           <div className="fw-semibold fs-5 ms-4 text-dark">GeoPulse</div>
@@ -26,7 +26,7 @@ export default function UserDashboard() {
 
         {/* Main Content */}
         <div className="dashboard-main-content ms-4 mt-4 me-4">
-          
+
           {/* Welcome + Notifications */}
           <div className="row g-3 mb-4">
             {/* Welcome */}
@@ -38,7 +38,7 @@ export default function UserDashboard() {
                 </p>
                 <div className="mt-3 d-flex flex-wrap gap-4 text-muted">
                   <div><strong>Last Login:</strong> {formatLastLogin(user.lastLogin)}</div>
-                  <div><strong>Role:</strong> User</div>
+                  <div><strong>Role:</strong> {user.role.charAt(0).toUpperCase() + user.role.slice(1)}</div>
                   <div><strong>Device Connected:</strong> 3 Tags</div>
                 </div>
                 <div className="mt-3 d-flex flex-wrap gap-2">
