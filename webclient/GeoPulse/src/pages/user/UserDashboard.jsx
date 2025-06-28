@@ -2,9 +2,11 @@ import React from 'react';
 import SidebarUser from './SidebarUser';
 import "../../assets/styles/user/dashboardRightContentCommon.css";
 import "../../assets/styles/user/HomeDashboard.css";
+import { useAuthStore } from '../../assets/store/authStore';
 import { FaBell } from "react-icons/fa";
 
 export default function UserDashboard() {
+  const {user} = useAuthStore();
   return (
     <div className="d-flex align-items-start w-100">
       {/* Sidebar */}
@@ -29,7 +31,7 @@ export default function UserDashboard() {
             {/* Welcome */}
             <div className="col-12 col-md-8">
               <div className="p-4 rounded shadow-sm bg-white h-100">
-                <h4 className="fw-bold mb-2 text-primary">Welcome, Mohit Soni 👋</h4>
+                <h4 className="fw-bold mb-2 text-primary">Welcome, {user.name} 👋</h4>
                 <p className="mb-0 text-muted">
                   Track your smart tags in real-time, set GeoFences, and manage devices seamlessly.
                 </p>

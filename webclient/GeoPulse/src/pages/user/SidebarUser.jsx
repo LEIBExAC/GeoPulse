@@ -4,15 +4,14 @@ import { Link } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
 import "../../assets/styles/user/sidebarUser.css";
 import LogoutModal from '../../components/modal/LogoutModal';
+import { useAuthStore } from '../../assets/store/authStore';
 
 
 
 export default function SidebarUser() {
-
     const [showLogoutModal, setShowLogoutModal] = useState(false);
-
     const [visible, setVisible] = useState(true);
-
+    const {user} = useAuthStore();
     const toggleSidebar = () => {
         setVisible(!visible);
     };
@@ -27,14 +26,16 @@ export default function SidebarUser() {
             {visible && (
                 <div className="sidebar-user d-flex flex-column ">
                     <div className="sidebar-user__section text-center mt-4">
+                        
                         <Link to="/profile" className="sidebar-user__profile-link">
+                        
                             <img
-                                src="https://media.licdn.com/dms/image/v2/D4D03AQGHSM7hamqwuw/profile-displayphoto-shrink_200_200/B4DZVcDlWdHwAY-/0/1741006198742?e=2147483647&v=beta&t=B9kePrb4CFWFrcnhWBOH4FHApaLsPWRPdjK3vLh3KDo" // change to your actual profile image path
+                                src={user.profile}
                                 alt="Profile"
                                 className="sidebar-user__profile-pic mb-2"
                             />
                         </Link>
-                        <div className="sidebar-user__name">Mohit Soni</div>
+                        <div className="sidebar-user__name">{user.name}</div>
                         <hr className="sidebar-user__divider" />
                     </div>
 
