@@ -15,23 +15,21 @@ import UserDashboard from "./pages/user/UserDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import PageNotFound from "./pages/common/PageNotFound";
 import { useAuthStore } from './assets/store/authStore';
+import CreateTagPage from "./pages/admin/CreateTag";
+import ActivateTag from "./pages/common/ActivateTag";
+import UserTagList from "./pages/user/UserTagList";
+import AdminTagList from './pages/admin/AdminTagList';
+import TagDetailsPage from "./pages/common/tag/TagDetailsPage";
+
 
 function App() {
-  const { user, isAdmin, checkAuth,isAuthenticated } = useAuthStore();
-  const [isLoading, setisLoading] = useState(false)
+  const { user, isAdmin, checkAuth, isAuthenticated, isCheckingAuth } = useAuthStore();
 
   useEffect(() => {
-    const authenticate = async () => {
-      setisLoading(true)
-      await checkAuth();
-      console.log("Authentication check completed");
-      setisLoading(false)
-    };
-    authenticate();
+    checkAuth(); // no need to use local isLoading
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
-
+  if (isCheckingAuth) return <div>Loading authentication...</div>;
 
   const ProtectedRoute = ({ children }) => {
     if (!isAuthenticated) {
@@ -68,6 +66,7 @@ function App() {
         <Route path="*" element={<PageNotFound />} />
         <Route path="/" element={<Landing />} />
         <Route path="/signin" element={<Login />} />
+        <Route path="/admin-signin" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/features" element={<Feature />} />
         <Route path="/services" element={<Services />} />
@@ -94,6 +93,56 @@ function App() {
               <AdminRoute>
                 <AdminDashboard />
               </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/create-tag"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                <CreateTagPage />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/activate-tag"
+          element={
+            <ProtectedRoute>
+              <ActivateTag />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/my-tags"
+          element={
+            <ProtectedRoute>
+              <UserRoute>
+                <UserTagList />
+              </UserRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/all-tags"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                <AdminTagList />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/tag/:id" element={
+            <ProtectedRoute>
+              <TagDetailsPage />
             </ProtectedRoute>
           }
         />

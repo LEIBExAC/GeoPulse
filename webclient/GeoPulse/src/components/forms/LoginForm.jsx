@@ -59,6 +59,7 @@ function LoginForm() {
             name="email"
             value={formData.email}
             onChange={handleChange}
+            autoFocus
             required
             isInvalid={formData.email && !isValidEmail(formData.email)}
           />
