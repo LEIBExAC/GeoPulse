@@ -5,6 +5,7 @@ import "../../assets/styles/user/HomeDashboard.css";
 import { useAuthStore } from '../../assets/store/authStore';
 import { FaBell } from "react-icons/fa";
 import { formatLastLogin } from '../../utility/formatLastLogin';
+import { MapContainer, TileLayer, useMap } from 'react-leaflet' //map related imports
 
 export default function UserDashboard() {
   const { user } = useAuthStore();
