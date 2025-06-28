@@ -91,6 +91,7 @@ export default function VerifyOTP() {
                 key={index}
                 type="text"
                 maxLength="1"
+                autoFocus={index === 0}
                 className="text-center"
                 style={{ width: "3rem", height: "3rem", fontSize: "1.5rem" }}
                 value={data}

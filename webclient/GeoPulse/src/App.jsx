@@ -18,6 +18,12 @@ import AddTag from "./pages/user/AddTag";
 import MyTag from "./pages/user/MyTag";
 import Profile from "./pages/user/Profile";
 import { useAuthStore } from './assets/store/authStore';
+import CreateTagPage from "./pages/admin/CreateTag";
+import ActivateTag from "./pages/user/ActivateTag";
+import UserTagList from "./pages/user/UserTagList";
+import AdminTagList from './pages/admin/AdminTagList';
+import TagDetailsPage from "./pages/common/tag/TagDetailsPage";
+
 
 function App() {
   const { user, isAdmin, checkAuth,isAuthenticated} = useAuthStore();
@@ -70,11 +76,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/signin" element={<Login />} />
+        <Route path="/admin-signin" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/features" element={<Feature />} />
         <Route path="/services" element={<Services />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/contact" element={<Contact />} />
+        {/* TODO: Have to fix this route, that it will only open if user has yet to verify their Email otherwise route back to Landing Page */}
         <Route path="/verify-email" element={<VerifyOTP />} />
         {/* <Route path="/user-dashboard" element={<UserDashboard />} /> */}
         {/* <Route path="/admin-dashboard" element={<AdminDashboard />} /> */}
@@ -100,7 +108,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
+        {/* <Route
           path="/my-tags"
           element={
             <ProtectedRoute>
@@ -109,7 +117,7 @@ function App() {
               </UserRoute>
             </ProtectedRoute>
           }
-        />
+        /> */}
         <Route
           path="/profile"
           element={
@@ -127,6 +135,56 @@ function App() {
               <AdminRoute>
                 <AdminDashboard />
               </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/create-tag"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                <CreateTagPage />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/activate-tag"
+          element={
+            <ProtectedRoute>
+              <ActivateTag />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/my-tags"
+          element={
+            <ProtectedRoute>
+              <UserRoute>
+                <UserTagList />
+              </UserRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/all-tags"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                <AdminTagList />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/tag/:id" element={
+            <ProtectedRoute>
+              <TagDetailsPage />
             </ProtectedRoute>
           }
         />
