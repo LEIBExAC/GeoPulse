@@ -73,6 +73,38 @@
 					"response": []
 				},
 				{
+					"name": "Request reset OTP",
+					"id": "39266646-11876900-63f0-4400-a444-70946900afe9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"mohitsonip1847@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/request-reset-otp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"request-reset-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "verify OTP at signup",
 					"id": "39266646-36f4ed06-5940-4ade-bba8-a7221ae9d818",
 					"protocolProfileBehavior": {
@@ -137,38 +169,6 @@
 							"port": "8080",
 							"path": [
 								"verify-reset-otp"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Request reset OTP",
-					"id": "39266646-11876900-63f0-4400-a444-70946900afe9",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"mohitsonip1847@gmail.com\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/request-reset-otp",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"request-reset-otp"
 							]
 						}
 					},
