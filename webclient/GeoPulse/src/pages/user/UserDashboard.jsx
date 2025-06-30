@@ -5,6 +5,9 @@ import "../../assets/styles/user/HomeDashboard.css";
 import { useAuthStore } from '../../assets/store/authStore';
 import { FaBell } from "react-icons/fa";
 import { formatLastLogin } from '../../utility/formatLastLogin';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+
 
 export default function UserDashboard() {
   const { user } = useAuthStore();
@@ -72,15 +75,13 @@ export default function UserDashboard() {
           </div>
 
           {/* Map Section */}
-          <div className="w-100 mt-3 p-0">
-            <div className="w-100 overflow-hidden rounded shadow-sm" style={{ height: '300px' }}>
-              <img
-                src="https://storage.googleapis.com/support-forums-api/attachment/thread-21292277-13674907007105193493.jpg"
-                alt="Map Preview"
-                className="w-100 h-100"
-                style={{ objectFit: 'cover' }}
-              />
-            </div>
+          <div className="">
+            <MapContainer center={[22.681112357437488, 75.8170522116108]} zoom={13} style={{ height: '350px' }}>
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              <Marker position={[22.681112357437488, 75.8170522116108]}>
+                <Popup>Here I am</Popup>
+              </Marker>
+            </MapContainer>
           </div>
 
           {/* Quick Stats */}

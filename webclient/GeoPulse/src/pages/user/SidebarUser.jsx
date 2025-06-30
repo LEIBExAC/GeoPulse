@@ -12,7 +12,7 @@ export default function SidebarUser() {
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [visible, setVisible] = useState(true);
     const {user} = useAuthStore();
-    const toggleSidebar = () => {
+    const toggleSidebar = () => { 
         setVisible(!visible);
     };
 
@@ -24,7 +24,7 @@ export default function SidebarUser() {
             </div>
 
             {visible && (
-                <div className="sidebar-user d-flex flex-column ">
+                <div className="sidebar-user d-flex flex-column " style={{zIndex:"1090"}}>
                     <div className="sidebar-user__section text-center mt-4">
                         
                         <Link to="/profile" className="sidebar-user__profile-link">

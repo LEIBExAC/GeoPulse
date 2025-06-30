@@ -19,7 +19,6 @@ import MyTag from "./pages/user/MyTag";
 import Profile from "./pages/user/Profile";
 import { useAuthStore } from './assets/store/authStore';
 import CreateTagPage from "./pages/admin/CreateTag";
-import ActivateTag from "./pages/user/ActivateTag";
 import UserTagList from "./pages/user/UserTagList";
 import AdminTagList from './pages/admin/AdminTagList';
 import TagDetailsPage from "./pages/common/tag/TagDetailsPage";
@@ -43,7 +42,7 @@ function App() {
 
 
   const ProtectedRoute = ({ children }) => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated || !user)  {
       console.log("Redirecting to Signin...");
       return <Navigate to="/signin" replace />; // Redirect to signin if not authenticated
     }
@@ -149,14 +148,7 @@ function App() {
           }
         />
 
-        <Route
-          path="/activate-tag"
-          element={
-            <ProtectedRoute>
-              <ActivateTag />
-            </ProtectedRoute>
-          }
-        />
+        
 
         <Route
           path="/my-tags"
