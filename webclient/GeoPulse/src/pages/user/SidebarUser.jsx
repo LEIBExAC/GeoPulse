@@ -42,7 +42,7 @@ export default function SidebarUser() {
 
                     <Nav defaultActiveKey="/home" className="flex-column sidebar-user__nav">
                         <Nav.Link as={Link} to="/user-dashboard" className="sidebar-user__link">Home</Nav.Link>
-                        <Nav.Link as={Link} to="/live-location" className="sidebar-user__link">Live Location</Nav.Link>
+                        <Nav.Link as={Link} to="/tag/live-location" className="sidebar-user__link">Live Location</Nav.Link>
                         <Nav.Link as={Link} to="/my-tags" className="sidebar-user__link">My Tags</Nav.Link>
                         <Nav.Link as={Link} to="/add-new-tag" className="sidebar-user__link">Add Tag</Nav.Link>
                         <Nav.Link as={Link} to="/geofence" className="sidebar-user__link">Geofence</Nav.Link>

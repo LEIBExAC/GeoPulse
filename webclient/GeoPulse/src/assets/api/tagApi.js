@@ -28,19 +28,20 @@ export const getUserTags = async (userId) => {
   const res = await fetch(`${backend_url}/tags/owned/${userId}`, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json", 
     },
     credentials: "include",
   });
 
   const data = await res.json();
+  console.log(data)
 
   if (!res.ok) {
     throw new Error(data.error || "Failed to fetch user tags");
   }
 
   return data;
-};
+}; 
 
 export const getAllTags = async (userId, isAdmin) => {
   let res;

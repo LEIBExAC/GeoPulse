@@ -22,6 +22,8 @@ import CreateTagPage from "./pages/admin/CreateTag";
 import UserTagList from "./pages/user/UserTagList";
 import AdminTagList from './pages/admin/AdminTagList';
 import TagDetailsPage from "./pages/common/tag/TagDetailsPage";
+import TagCard from "./components/cards/TagCard";
+import TagLiveLocation from "./pages/user/TagLiveLocation";
 
 
 function App() {
@@ -74,6 +76,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/test" element={<TagCard />} />
         <Route path="/signin" element={<Login />} />
         <Route path="/admin-signin" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
@@ -106,16 +109,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {/* <Route
-          path="/my-tags"
-          element={
-            <ProtectedRoute>
-              <UserRoute>
-                <MyTag/>
-              </UserRoute>
-            </ProtectedRoute>
-          }
-        /> */}
+       
         <Route
           path="/profile"
           element={
@@ -155,7 +149,17 @@ function App() {
           element={
             <ProtectedRoute>
               <UserRoute>
-                <UserTagList />
+                <MyTag />
+              </UserRoute>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tag/live-location"
+          element={
+            <ProtectedRoute>
+              <UserRoute>
+                <TagLiveLocation/>
               </UserRoute>
             </ProtectedRoute>
           }
