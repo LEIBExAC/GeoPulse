@@ -523,7 +523,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Get tag latest location",
 					"id": "39266646-748b513e-3a70-4a26-8b5a-bde9b1c99739",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
