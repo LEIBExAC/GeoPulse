@@ -491,7 +491,28 @@
 					},
 					"request": {
 						"method": "POST",
-						"header": []
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODNiNzAyNzllZmE1YTE1MzEwNmQxNDgiLCJpYXQiOjE3NDg3Nzc5NDQsImV4cCI6MTc0OTM4Mjc0NH0.lCSq2Cu1k7lEauqKvF8_ixYCSxi5O10K_LVwC7eDnLM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tagId\" : \"Tag01\",\r\n    \r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/update-loc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"update-loc"
+							]
+						}
 					},
 					"response": []
 				}
