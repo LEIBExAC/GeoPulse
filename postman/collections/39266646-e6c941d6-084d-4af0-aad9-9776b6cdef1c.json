@@ -484,7 +484,7 @@
 			"name": "Location",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "update-location",
 					"id": "39266646-6a4d507c-add6-4a36-aea9-fe2a10c6f64c",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
