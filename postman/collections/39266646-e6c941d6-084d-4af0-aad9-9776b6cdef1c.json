@@ -500,7 +500,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"tagId\": \"Tag01\",\r\n  \"latitude\":\"1000\",\r\n  \"longitude\":\"360\",\r\n  \"speed\":\"2\",\r\n  \"battery\":\"99\"\r\n  }",
+							"raw": "{\r\n  \"tagId\": \"Tag02\",\r\n  \"latitude\":\"22.704331\",\r\n  \"longitude\":\" 75.810621\",\r\n  \"speed\":\"2\",\r\n  \"battery\":\"99\"\r\n  }",
 							"options": {
 								"raw": {
 									"language": "json"
