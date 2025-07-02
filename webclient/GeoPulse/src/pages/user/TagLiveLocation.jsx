@@ -7,15 +7,35 @@ import { getUserTags } from '../../assets/api/tagApi';
 import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
 import { Card } from 'react-bootstrap';
 import { formatLastLogin } from '../../utility/formatLastLogin';
+import { getUserLocation } from '../../utility/getUserLocation';
+
 
 
 export default function TagLiveLocation() {
+    const DEFAULT_COORDINATES = { latitude: 22.681236053967947, longitude: 75.81711289414646 };
+    const [userGeoCoordinates, setuserGeoCoordinates] = useState(null)
     const [tags, setTags] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedTag, setSelectedTag] = useState(null);
 
     const { user } = useAuthStore();
+    useEffect(() => {
+        const fetchLocation = async () => {
+            try {
+                const { latitude, longitude } = await getUserLocation();
+                setuserGeoCoordinates({ latitude: latitude, longitude: longitude });
+            } catch (err) {
+                // setLocationError(err.message);
+                setuserGeoCoordinates(DEFAULT_COORDINATES);
+                // alert("Please allow Location to work website properly. Then refresf page")
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchLocation();
+    }, []);
 
     useEffect(() => {
         const fetchTags = async () => {
@@ -40,11 +60,13 @@ export default function TagLiveLocation() {
             tags={tags}
             selectedTag={selectedTag}
             setSelectedTag={setSelectedTag}
+            userGeoCoordinates={userGeoCoordinates}
+            DEFAULT_COORDINATES={DEFAULT_COORDINATES}
         />
     );
 }
 
-function SelectTagForLiveLocation({ tags, selectedTag, setSelectedTag }) {
+function SelectTagForLiveLocation({ tags, selectedTag, setSelectedTag, userGeoCoordinates, DEFAULT_COORDINATES }) {
     // Get selected tag's full object
     const selectedTagObject = tags.find(tag => tag._id === selectedTag);
 
@@ -106,8 +128,13 @@ function SelectTagForLiveLocation({ tags, selectedTag, setSelectedTag }) {
 
                     {/* 👇 Tag Details (Shown only if tag is selected) */}
                     {selectedTagObject && (
-                        <SelectedTag selectedTagObject={selectedTagObject} />
+                        <SelectedTag
+                            selectedTagObject={selectedTagObject}
+                            userGeoCoordinates={userGeoCoordinates}   // ✅ passed again
+                            DEFAULT_COORDINATES={DEFAULT_COORDINATES}
+                        />
                     )}
+
                 </div>
             </div>
         </div>
@@ -116,17 +143,46 @@ function SelectTagForLiveLocation({ tags, selectedTag, setSelectedTag }) {
 
 
 
-function SelectedTag({ selectedTagObject }) {
+function SelectedTag({ selectedTagObject, userGeoCoordinates, DEFAULT_COORDINATES }) {
     return (
         <>
             {/* //Map of live Location  */}
             <div className='mt-5'>
-                <MapContainer center={[22.681112357437488, 75.8170522116108]} zoom={13} style={{ height: '350px' }}>
+                <MapContainer
+                    center={[
+                        userGeoCoordinates?.latitude ?? DEFAULT_COORDINATES.latitude,
+                        userGeoCoordinates?.longitude ?? DEFAULT_COORDINATES.longitude,
+                    ]}
+                    zoom={
+                        (userGeoCoordinates?.latitude === DEFAULT_COORDINATES.latitude &&
+                            userGeoCoordinates?.longitude === DEFAULT_COORDINATES.longitude)
+                            ? 5
+                            : 13
+                    }
+                    style={{ height: '350px' }}
+                >
                     <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                    <Marker position={[22.681112357437488, 75.8170522116108]}>
-                        <Popup>Here I am</Popup>
-                    </Marker>
+
+                    {/* ✅ Only render if coordinates exist */}
+                    {userGeoCoordinates && (
+                        <Marker position={[userGeoCoordinates.latitude, userGeoCoordinates.longitude]}>
+                            <Popup>This is your location</Popup>
+                        </Marker>
+                    )}
+
+                    {/* ✅ Render tag marker if it exists and is valid */}
+                    {selectedTagObject?.location?.coordinates?.length === 2 && (
+                        <Marker
+                            position={[
+                                selectedTagObject.location.coordinates[1], // latitude
+                                selectedTagObject.location.coordinates[0], // longitude
+                            ]}
+                        >
+                            <Popup>{selectedTagObject.tagId}</Popup>
+                        </Marker>
+                    )}
                 </MapContainer>
+
             </div>
             {/* card showing current selected tag details  */}
             <div className="d-flex gap-4 align-items-start flex-wrap mt-4">
@@ -140,7 +196,7 @@ function SelectedTag({ selectedTagObject }) {
                         <div className="mb-2"><strong>Battery:</strong> 🔋 {selectedTagObject.battery} %</div>
                         <div className="mb-2"><strong>Status:</strong> ✅ {selectedTagObject.status}</div>
                         <div className="mb-2"><strong>Location:</strong> 📍 Indore</div>
-                        <div className="mb-2"><strong>Speed:</strong> 🚗 {selectedTagObject.speed ||"100"} km/h</div>
+                        <div className="mb-2"><strong>Speed:</strong> 🚗 {selectedTagObject.speed || "100"} km/h</div>
                         <div><strong>Updated:</strong> 🕒 {formatLastLogin(selectedTagObject.lastSeen)}</div>
                     </div>
                 </div>
