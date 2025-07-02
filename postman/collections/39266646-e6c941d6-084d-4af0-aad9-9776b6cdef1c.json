@@ -500,7 +500,12 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"TagId\":\"Tag01\"\r\n}"
+							"raw": "{\r\n  \"tagId\": \"Tag01\",\r\n  \"latitude\":\"1000\",\r\n  \"longitude\":\"360\",\r\n  \"speed\":\"2\",\r\n  \"battery\":\"99\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
 							"raw": "http://localhost:8080/location/update-loc",
