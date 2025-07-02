@@ -500,16 +500,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tagId\" : \"Tag01\",\r\n    \r\n}"
+							"raw": "{\r\n    \"TagId\":\"Tag01\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/update-loc",
+							"raw": "http://localhost:8080/location/update-loc",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
+								"location",
 								"update-loc"
 							]
 						}
