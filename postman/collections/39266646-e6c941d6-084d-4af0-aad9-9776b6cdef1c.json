@@ -482,7 +482,20 @@
 		},
 		{
 			"name": "Location",
-			"item": [],
+			"item": [
+				{
+					"name": "New Request",
+					"id": "39266646-f8066900-85b7-41aa-bdaa-175226acbf5c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
 			"id": "39266646-5ca29f3c-b850-4710-863a-6b8cbf6cdcc2"
 		}
 	]
