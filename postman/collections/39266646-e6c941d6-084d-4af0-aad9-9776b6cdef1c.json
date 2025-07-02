@@ -485,12 +485,12 @@
 			"item": [
 				{
 					"name": "New Request",
-					"id": "39266646-f8066900-85b7-41aa-bdaa-175226acbf5c",
+					"id": "39266646-6a4d507c-add6-4a36-aea9-fe2a10c6f64c",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": []
 					},
 					"response": []
