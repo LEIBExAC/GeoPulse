@@ -166,7 +166,7 @@ export default function UserDashboard() {
               <div className="col-12 col-sm-6 col-md-3">
                 <div className="bg-white d-flex align-items-center justify-content-start p-3 rounded shadow-sm h-100">
                   <img src="/icon/tag.png" alt="Tags" width="24" height="24" className="me-3" />
-                  <span className="fw-semibold text-dark">3 Tags</span>
+                  <span className="fw-semibold text-dark">{tags.length  + " "}Tags</span>
                 </div>
               </div>
 
