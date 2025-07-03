@@ -13,6 +13,17 @@ app.use(cors({
   credentials: true, // to allow cookies
 }));
 
+app.get("/", (req, res) => {
+  res.send(`
+    <pre style="font-family: 'Courier New', monospace; color: #4CAF50; font-size: 18px;">
+🚀 Welcome to the GeoPulse Server!
+✅ Server is running perfectly.
+🌐 Listening on port 5000
+    </pre>
+  `);
+});
+
+
 app.use(express.json())
 app.use(cookieParser()); 
 app.use(require("./routes/auth"))
