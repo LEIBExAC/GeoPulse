@@ -73,6 +73,38 @@
 					"response": []
 				},
 				{
+					"name": "Request reset OTP",
+					"id": "39266646-11876900-63f0-4400-a444-70946900afe9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"mohitsonip1847@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/request-reset-otp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"request-reset-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "verify OTP at signup",
 					"id": "39266646-36f4ed06-5940-4ade-bba8-a7221ae9d818",
 					"protocolProfileBehavior": {
@@ -137,38 +169,6 @@
 							"port": "8080",
 							"path": [
 								"verify-reset-otp"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Request reset OTP",
-					"id": "39266646-11876900-63f0-4400-a444-70946900afe9",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"mohitsonip1847@gmail.com\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/request-reset-otp",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"request-reset-otp"
 							]
 						}
 					},
@@ -479,6 +479,63 @@
 				}
 			],
 			"id": "39266646-c83a0c47-e9ce-4224-b9fe-a95a197c16c7"
+		},
+		{
+			"name": "Location",
+			"item": [
+				{
+					"name": "update-location",
+					"id": "39266646-6a4d507c-add6-4a36-aea9-fe2a10c6f64c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODNiNzAyNzllZmE1YTE1MzEwNmQxNDgiLCJpYXQiOjE3NDg3Nzc5NDQsImV4cCI6MTc0OTM4Mjc0NH0.lCSq2Cu1k7lEauqKvF8_ixYCSxi5O10K_LVwC7eDnLM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"tagId\": \"Tag02\",\r\n  \"latitude\":\"22.704331\",\r\n  \"longitude\":\" 75.810621\",\r\n  \"speed\":\"2\",\r\n  \"battery\":\"99\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/location/update-loc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"location",
+								"update-loc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get tag latest location",
+					"id": "39266646-748b513e-3a70-4a26-8b5a-bde9b1c99739",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"id": "39266646-5ca29f3c-b850-4710-863a-6b8cbf6cdcc2"
 		}
 	]
 }
