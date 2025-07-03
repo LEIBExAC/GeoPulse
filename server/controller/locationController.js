@@ -21,7 +21,7 @@ const { createAlert } = require("../utility/createAlert");
      *        return res.status(400).json({ error: 'Invalid latitude, longitude, or battery' });
      *     }  
     */
-const updateLocation = async (req, res) => {
+const updateLocation = async (req, res) => {    //api location/update-loc
   try {
     const { tagId, latitude, longitude, battery, speed } = req.body;
 

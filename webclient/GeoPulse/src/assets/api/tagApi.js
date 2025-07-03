@@ -1,14 +1,15 @@
 import axios from "axios";
 import { backend_url } from "../store/keyStore";
-
+ 
+// admin route to create tag 
 export const createTag = async (tagData) => {
   const res = await axios.post(`${backend_url}/tag/register`, tagData, {
     withCredentials: true,
   });
   return res.data;
 };
-
-export const activateTag = async (tagData) => {
+//  user route to activate new tag   
+export const activateTag = async (tagData) => {        //tagData = {activationCode , activationCode}
   const res = await fetch(`${backend_url}/tag/activate`, {
     method: "POST",
     headers: {
@@ -27,19 +28,20 @@ export const getUserTags = async (userId) => {
   const res = await fetch(`${backend_url}/tags/owned/${userId}`, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json", 
     },
     credentials: "include",
   });
 
   const data = await res.json();
+  console.log(data)
 
   if (!res.ok) {
     throw new Error(data.error || "Failed to fetch user tags");
   }
 
   return data;
-};
+}; 
 
 export const getAllTags = async (userId, isAdmin) => {
   let res;

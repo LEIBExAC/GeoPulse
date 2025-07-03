@@ -89,7 +89,7 @@ router.post("/tag/activate", verifyToken, async (req, res) => {
     return res.status(500).json({ error: "Internal server error." });
   }
 });
-
+ 
 // Fetching all tags for admin or owned by user(adding for owner just in case - not actually needed and used)
 router.get("/tags", verifyToken, async (req, res) => {
   try {

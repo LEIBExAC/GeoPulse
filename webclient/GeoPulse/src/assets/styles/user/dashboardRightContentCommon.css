@@ -47,3 +47,20 @@
   background-color: rgb(181, 57, 57);
   border-radius: 50%;
 }
+
+
+/* //CSS for AddTag.jsx */
+/* .table th, .table td {
+  vertical-align: middle;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+} */
+.equal-height-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  border-radius: 1rem;
+}
+

@@ -1,14 +1,65 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SidebarUser from './SidebarUser';
 import "../../assets/styles/user/dashboardRightContentCommon.css";
 import "../../assets/styles/user/HomeDashboard.css";
 import { useAuthStore } from '../../assets/store/authStore';
 import { FaBell } from "react-icons/fa";
 import { formatLastLogin } from '../../utility/formatLastLogin';
-import { MapContainer, TileLayer, useMap } from 'react-leaflet' //map related imports
+import { getUserLocation } from '../../utility/getUserLocation';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { getAllTags } from '../../assets/api/tagApi';
+import 'leaflet/dist/leaflet.css';
+
 
 export default function UserDashboard() {
-  const { user } = useAuthStore();
+  const { user, isAdmin } = useAuthStore();
+  const DEFAULT_COORDINATES = { latitude: 21.2536, longitude: 81.6257 };
+  const [userGeoCoordinates, setuserGeoCoordinates] = useState(null)
+  const [loading, setLoading] = useState(true);
+  const [tags, setTags] = useState([])
+
+
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        const { latitude, longitude } = await getUserLocation();
+        setuserGeoCoordinates({ latitude: latitude, longitude: longitude });
+      } catch (err) {
+        // setLocationError(err.message);
+        setuserGeoCoordinates(DEFAULT_COORDINATES);
+        // alert("Please allow Location to work website properly. Then refresf page")
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLocation();
+  }, []);
+  //fetches all user tags.
+  useEffect(() => {
+    const fetchMyTags = async () => {
+      try {
+        const tags = await getAllTags(user._id, isAdmin);
+        setTags(tags); // example state update
+      } catch (error) {
+        console.error("Error fetching tags:", error.message);
+      }
+    };
+
+    fetchMyTags();
+  }, []);
+
+
+
+  if (loading) {
+    return (
+      <div className="p-5 text-muted text-center">
+        📍 loading...
+      </div>
+    );
+  }
+
+
   return (
     <div className="d-flex align-items-start w-100">
       {/* Sidebar */}
@@ -73,15 +124,38 @@ export default function UserDashboard() {
           </div>
 
           {/* Map Section */}
-          <div className="w-100 mt-3 p-0">
-            <div className="w-100 overflow-hidden rounded shadow-sm" style={{ height: '300px' }}>
-              <img
-                src="https://storage.googleapis.com/support-forums-api/attachment/thread-21292277-13674907007105193493.jpg"
-                alt="Map Preview"
-                className="w-100 h-100"
-                style={{ objectFit: 'cover' }}
-              />
-            </div>
+          <div className="">
+            <MapContainer center={[
+              userGeoCoordinates?.latitude ?? DEFAULT_COORDINATES.latitude,
+              userGeoCoordinates?.longitude ?? DEFAULT_COORDINATES.longitude,
+            ]}
+              zoom={userGeoCoordinates === DEFAULT_COORDINATES ? 5 : 13}
+              style={{ height: '350px' }}>
+              {console.log(userGeoCoordinates.latitude + "  ----" + userGeoCoordinates.longitude)}
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              <Marker position={[
+                userGeoCoordinates?.latitude ?? DEFAULT_COORDINATES.latitude,
+                userGeoCoordinates?.longitude ?? DEFAULT_COORDINATES.longitude,
+              ]}>
+                <Popup>You are here</Popup>
+              </Marker>
+
+              {tags.map((tag) => (
+                tag?.location?.coordinates?.length === 2 && (
+                  <Marker
+                    key={tag._id}
+                    position={[tag.location.coordinates[1], tag.location.coordinates[0]]}
+                  >
+                    <Popup>{tag.tagId}</Popup>
+                  </Marker>
+                )
+              ))}
+              {console.log(tags)
+              }
+
+
+
+            </MapContainer>
           </div>
 
           {/* Quick Stats */}
@@ -92,7 +166,7 @@ export default function UserDashboard() {
               <div className="col-12 col-sm-6 col-md-3">
                 <div className="bg-white d-flex align-items-center justify-content-start p-3 rounded shadow-sm h-100">
                   <img src="/icon/tag.png" alt="Tags" width="24" height="24" className="me-3" />
-                  <span className="fw-semibold text-dark">3 Tags</span>
+                  <span className="fw-semibold text-dark">{tags.length  + " "}Tags</span>
                 </div>
               </div>
 
