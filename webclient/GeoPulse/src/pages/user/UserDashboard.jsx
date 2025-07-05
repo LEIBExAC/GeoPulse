@@ -9,6 +9,7 @@ import { getUserLocation } from '../../utility/getUserLocation';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { getAllTags } from '../../assets/api/tagApi';
 import 'leaflet/dist/leaflet.css';
+import { homeMarker , tagMarker } from '../../utility/MarkerOfMap';
 
 
 export default function UserDashboard() {
@@ -25,7 +26,7 @@ export default function UserDashboard() {
         const { latitude, longitude } = await getUserLocation();
         setuserGeoCoordinates({ latitude: latitude, longitude: longitude });
       } catch (err) {
-        // setLocationError(err.message);
+        setLocationError(err.message);
         setuserGeoCoordinates(DEFAULT_COORDINATES);
         // alert("Please allow Location to work website properly. Then refresf page")
       } finally {
@@ -136,7 +137,9 @@ export default function UserDashboard() {
               <Marker position={[
                 userGeoCoordinates?.latitude ?? DEFAULT_COORDINATES.latitude,
                 userGeoCoordinates?.longitude ?? DEFAULT_COORDINATES.longitude,
-              ]}>
+              ]}
+                icon={homeMarker}
+              >
                 <Popup>You are here</Popup>
               </Marker>
 
@@ -145,6 +148,8 @@ export default function UserDashboard() {
                   <Marker
                     key={tag._id}
                     position={[tag.location.coordinates[1], tag.location.coordinates[0]]}
+                    icon={tagMarker}
+
                   >
                     <Popup>{tag.tagId}</Popup>
                   </Marker>
@@ -166,7 +171,7 @@ export default function UserDashboard() {
               <div className="col-12 col-sm-6 col-md-3">
                 <div className="bg-white d-flex align-items-center justify-content-start p-3 rounded shadow-sm h-100">
                   <img src="/icon/tag.png" alt="Tags" width="24" height="24" className="me-3" />
-                  <span className="fw-semibold text-dark">{tags.length  + " "}Tags</span>
+                  <span className="fw-semibold text-dark">{tags.length + " "}Tags</span>
                 </div>
               </div>
 
