@@ -47,7 +47,7 @@ const TagDetailsPage = () => {
             <TagInfoCard tag={tag} userRole={userRole} />
             <TagActions tag={tag} userRole={userRole} />
             <TagLocationPreview tag={tag} />
-            <TagNavigation tagId={tag._id} />
+            <TagNavigation tagId={tag.tagId} />
         </div>
     );
 };

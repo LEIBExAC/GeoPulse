@@ -1,6 +1,7 @@
 import React from "react"; // ← Required for JSX
 import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "leaflet/dist/leaflet.css";
 import Landing from './pages/common/Landing';
 import './App.css';
 import SignUp from './pages/common/Signup';
@@ -23,11 +24,16 @@ import ActivateTag from "./pages/user/ActivateTag";
 import UserTagList from "./pages/user/UserTagList";
 import AdminTagList from './pages/admin/AdminTagList';
 import TagDetailsPage from "./pages/common/tag/TagDetailsPage";
+import GeofenceList from "./pages/common/geofence/GeofenceList";
+import GeofenceCreate from "./pages/common/geofence/GeofenceCreate";
+import GeofenceEdit from "./pages/common/geofence/GeofenceEdit";
+import GeofenceDetailPage from "./pages/common/geofence/GeofenceDetail";
+import GeofenceAlertsPage from "./pages/common/geofence/GeofenceAlerts";
 
 
 function App() {
-  const { user, isAdmin, checkAuth,isAuthenticated} = useAuthStore();
-   const [loading, setLoading] = useState(true); // State to track loading
+  const { user, isAdmin, checkAuth, isAuthenticated } = useAuthStore();
+  const [loading, setLoading] = useState(true); // State to track loading
 
 
   useEffect(() => {
@@ -73,6 +79,7 @@ function App() {
   };
   return (
     <BrowserRouter>
+      {/* TODO: Arrage these route based on the call/module(Example for tag module list them seprately) */}
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/signin" element={<Login />} />
@@ -102,7 +109,7 @@ function App() {
           element={
             <ProtectedRoute>
               <UserRoute>
-                <AddTag/>
+                <AddTag />
               </UserRoute>
             </ProtectedRoute>
           }
@@ -122,7 +129,7 @@ function App() {
           element={
             <ProtectedRoute>
               <UserRoute>
-                <Profile/>
+                <Profile />
               </UserRoute>
             </ProtectedRoute>
           }
@@ -188,7 +195,48 @@ function App() {
           }
         />
 
-          <Route path="*" element={<PageNotFound />} />
+        {/* Geofence Route */}
+
+        {/* Detail page */}
+        <Route
+          path="/tag/:tagId/geofence/:geofenceId"
+          element={
+            <ProtectedRoute>
+              <GeofenceDetailPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/tag/:tagId/geofence/:geofenceId/edit"
+          element={
+            <ProtectedRoute>
+              <GeofenceEdit />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/tag/:tagId/geofence/create"
+          element={
+            <ProtectedRoute>
+              <GeofenceCreate />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/geofence/:tagId/alerts"
+          element={
+            <ProtectedRoute>
+              <GeofenceAlertsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="/tag/:tagId/geofences" element={<GeofenceList />} />
+
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
   );

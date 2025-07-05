@@ -2,6 +2,11 @@
   const { Schema } = mongoose;
 
   const geofenceSchema = new Schema({
+    name: {
+      type: String,
+      trim: true,
+      maxlength: 100,
+    },
     tagId: {
       type: String,
       required: true,

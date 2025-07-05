@@ -8,7 +8,7 @@ const TagNavigation = ({ tagId }) => {
         <div className="d-flex gap-3 mt-4 flex-wrap">
             <button
                 className="btn btn-outline-primary"
-                onClick={() => navigate(`/tag/${tagId}/geofence`)}
+                onClick={() => navigate(`/tag/${tagId}/geofences`)}
             >
                 🛡️ Geofence
             </button>
