@@ -10,11 +10,12 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { getAllTags } from '../../assets/api/tagApi';
 import 'leaflet/dist/leaflet.css';
 import { homeMarker , tagMarker } from '../../utility/MarkerOfMap';
+import TagPopup from '../../utility/TagPopup';
 
 
 export default function UserDashboard() {
   const { user, isAdmin } = useAuthStore();
-  const DEFAULT_COORDINATES = { latitude: 21.2536, longitude: 81.6257 };
+  const DEFAULT_COORDINATES = { latitude: 22.696970409094032, longitude: 76.12557707999811 }; 
   const [userGeoCoordinates, setuserGeoCoordinates] = useState(null)
   const [loading, setLoading] = useState(true);
   const [tags, setTags] = useState([])
@@ -26,7 +27,7 @@ export default function UserDashboard() {
         const { latitude, longitude } = await getUserLocation();
         setuserGeoCoordinates({ latitude: latitude, longitude: longitude });
       } catch (err) {
-        setLocationError(err.message);
+        // setLocationError(err.message);
         setuserGeoCoordinates(DEFAULT_COORDINATES);
         // alert("Please allow Location to work website properly. Then refresf page")
       } finally {
@@ -151,7 +152,7 @@ export default function UserDashboard() {
                     icon={tagMarker}
 
                   >
-                    <Popup>{tag.tagId}</Popup>
+                    <Popup><TagPopup tag = {tag}></TagPopup></Popup>
                   </Marker>
                 )
               ))}

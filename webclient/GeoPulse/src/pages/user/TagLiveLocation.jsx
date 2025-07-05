@@ -8,6 +8,8 @@ import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
 import { Card } from 'react-bootstrap';
 import { formatLastLogin } from '../../utility/formatLastLogin';
 import { getUserLocation } from '../../utility/getUserLocation';
+import { homeMarker , tagMarker } from '../../utility/MarkerOfMap';
+    import TagPopup from '../../utility/TagPopup';
 
 
 
@@ -165,7 +167,11 @@ function SelectedTag({ selectedTagObject, userGeoCoordinates, DEFAULT_COORDINATE
 
                     {/* ✅ Only render if coordinates exist */}
                     {userGeoCoordinates && (
-                        <Marker position={[userGeoCoordinates.latitude, userGeoCoordinates.longitude]}>
+                        <Marker
+                         position={[userGeoCoordinates.latitude, userGeoCoordinates.longitude]}
+                         icon={homeMarker}
+
+                        >
                             <Popup>This is your location</Popup>
                         </Marker>
                     )}
@@ -177,8 +183,11 @@ function SelectedTag({ selectedTagObject, userGeoCoordinates, DEFAULT_COORDINATE
                                 selectedTagObject.location.coordinates[1], // latitude
                                 selectedTagObject.location.coordinates[0], // longitude
                             ]}
+                            icon={tagMarker}
+
+
                         >
-                            <Popup>{selectedTagObject.tagId}</Popup>
+                            <Popup><TagPopup tag={selectedTagObject}></TagPopup></Popup>
                         </Marker>
                     )}
                 </MapContainer>
