@@ -3,11 +3,12 @@ const mongoose = require('mongoose');
 const tagSchema = new mongoose.Schema({
   tagId: {
     type: String,
-    unique: true, // Unique identifier from device (e.g., MAC)
+    unique: true, // Unique identifier from device (e.g., MAC) initialy when admin make tagId is same as activation code
     required: true,
-  },
+  }, 
   name: {
     type: String,
+    default:"N/A"
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
@@ -57,7 +58,7 @@ const tagSchema = new mongoose.Schema({
     type: Date,
   },
   manufacturingDate:{
-    type:String,
+    type:Date,
   },
   activationStatus:{
     type:Boolean,

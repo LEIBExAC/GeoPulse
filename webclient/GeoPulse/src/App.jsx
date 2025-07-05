@@ -20,7 +20,6 @@ import MyTag from "./pages/user/MyTag";
 import Profile from "./pages/user/Profile";
 import { useAuthStore } from './assets/store/authStore';
 import CreateTagPage from "./pages/admin/CreateTag";
-import ActivateTag from "./pages/user/ActivateTag";
 import UserTagList from "./pages/user/UserTagList";
 import AdminTagList from './pages/admin/AdminTagList';
 import TagDetailsPage from "./pages/common/tag/TagDetailsPage";
@@ -29,6 +28,8 @@ import GeofenceCreate from "./pages/common/geofence/GeofenceCreate";
 import GeofenceEdit from "./pages/common/geofence/GeofenceEdit";
 import GeofenceDetailPage from "./pages/common/geofence/GeofenceDetail";
 import GeofenceAlertsPage from "./pages/common/geofence/GeofenceAlerts";
+import TagCard from "./components/cards/TagCard";
+import TagLiveLocation from "./pages/user/TagLiveLocation";
 
 
 function App() {
@@ -49,7 +50,7 @@ function App() {
 
 
   const ProtectedRoute = ({ children }) => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated || !user)  {
       console.log("Redirecting to Signin...");
       return <Navigate to="/signin" replace />; // Redirect to signin if not authenticated
     }
@@ -82,6 +83,7 @@ function App() {
       {/* TODO: Arrage these route based on the call/module(Example for tag module list them seprately) */}
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/test" element={<TagCard />} />
         <Route path="/signin" element={<Login />} />
         <Route path="/admin-signin" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
@@ -93,6 +95,7 @@ function App() {
         <Route path="/verify-email" element={<VerifyOTP />} />
         {/* <Route path="/user-dashboard" element={<UserDashboard />} /> */}
         {/* <Route path="/admin-dashboard" element={<AdminDashboard />} /> */}
+        
 
         <Route
           path="/user-dashboard"
@@ -114,16 +117,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {/* <Route
-          path="/my-tags"
-          element={
-            <ProtectedRoute>
-              <UserRoute>
-                <MyTag/>
-              </UserRoute>
-            </ProtectedRoute>
-          }
-        /> */}
+       
         <Route
           path="/profile"
           element={
@@ -156,21 +150,24 @@ function App() {
           }
         />
 
-        <Route
-          path="/activate-tag"
-          element={
-            <ProtectedRoute>
-              <ActivateTag />
-            </ProtectedRoute>
-          }
-        />
+        
 
         <Route
           path="/my-tags"
           element={
             <ProtectedRoute>
               <UserRoute>
-                <UserTagList />
+                <MyTag />
+              </UserRoute>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tag/live-location"
+          element={
+            <ProtectedRoute>
+              <UserRoute>
+                <TagLiveLocation/>
               </UserRoute>
             </ProtectedRoute>
           }

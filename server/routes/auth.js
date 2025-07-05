@@ -1,9 +1,9 @@
 const express = require("express");
 const USER = require("../models/user");
 const bcrypt = require('bcrypt');
-const {JWT_SECRET} = require("../utility/keys")
+const { JWT_SECRET } = require("../utility/keys")
 const generateTokenAndSetCookie = require("../utility/generateTokenAndSetCookie")
-const { sendVerificationEmail, sendVerificationConfrmEmail,sendPasswordResetEmail} = require("../config/emailSender")
+const { sendVerificationEmail, sendVerificationConfrmEmail, sendPasswordResetEmail } = require("../config/emailSender")
 const jwt = require("jsonwebtoken");
 const verifyToken = require("../middlewares/verifyToken");
 
@@ -11,7 +11,7 @@ const verifyToken = require("../middlewares/verifyToken");
 const router = express.Router();
 
 router.post("/signup", async (req, res) => {
-    try { 
+    try {
 
 
         console.log("Signup Route Hitted ..")
@@ -25,7 +25,7 @@ router.post("/signup", async (req, res) => {
         if (existingUser) {
             if (existingUser.isVerified) {
                 return res.status(400).json({ message: "User already exists with this email" });
-            } 
+            }
             else {
                 const newVerificationToken = Math.floor(100000 + Math.random() * 900000).toString();
                 existingUser.verificationToken = newVerificationToken;
@@ -37,7 +37,7 @@ router.post("/signup", async (req, res) => {
 
                 sendVerificationEmail(email, newVerificationToken);
                 generateTokenAndSetCookie(res, existingUser._id, existingUser);
-                return res.status(200).json({ message: "Verification email is resent", savedUser});
+                return res.status(200).json({ message: "Verification email is resent", savedUser });
 
             }
         }
@@ -78,14 +78,21 @@ router.post("/verify-otp", async (req, res) => {
         console.log("Verification Route Hitted..");
 
         const token = req.cookies.token;
-        // console.log("Cookies: ", req.cookies); // Debug line
+        console.log("Cookies: ", req.cookies); // Debug line
 
         if (!token) {
             return res.status(401).json({ message: "Unauthorized. No token provided." });
         }
 
-        const decoded = jwt.verify(token,JWT_SECRET);
-        const userId = decoded.userId;
+        let decoded;
+        try {
+            decoded = jwt.verify(token, JWT_SECRET);
+        } catch (err) {
+            if (err.name === "TokenExpiredError") {
+                return res.status(401).json({ message: "Token has expired. Please log in again or request a new OTP." });
+            }
+            return res.status(401).json({ message: "Invalid token." });
+        } const userId = decoded.userId;
 
         const user = await USER.findById(userId);
         if (!user) {
@@ -111,7 +118,7 @@ router.post("/verify-otp", async (req, res) => {
         user.verificationTokenExpiresAt = undefined;
 
         await user.save();
-        sendVerificationConfrmEmail(user.email,user)
+        sendVerificationConfrmEmail(user.email, user)
         res.status(200).json({ message: "Account verified successfully." });
 
     } catch (error) {
@@ -121,24 +128,24 @@ router.post("/verify-otp", async (req, res) => {
 });
 
 
-router.post("/signin" ,async(req,res)=>{
-    try{
+router.post("/signin", async (req, res) => {
+    try {
         console.log("Signin Route Hitted...")
-        const {email,password} = req.body;
+        const { email, password } = req.body;
 
-         if (!email || !password) {
+        if (!email || !password) {
             return res.status(400).json({ message: "Email and password are required" });
         }
 
         const user = await USER.findOne({ email });
 
-        if(!user){
+        if (!user) {
             return res.status(404).json({ message: "User does not exist" });
 
         }
         const isMatch = await bcrypt.compare(password, user.password);
 
-         if (!isMatch) {
+        if (!isMatch) {
             return res.status(401).json({ message: "Invalid credentials" });
         }
         user.lastLogin = new Date();
@@ -147,23 +154,23 @@ router.post("/signin" ,async(req,res)=>{
         res.status(200).json({ message: "Signin successful", user });
 
     }
-    catch(error){
-         console.error("Signin error:", error);
+    catch (error) {
+        console.error("Signin error:", error);
         res.status(500).json({ message: "Server error" });
     }
 })
 
-router.post("/request-reset-otp" , async(req,res)=>{
+router.post("/request-reset-otp", async (req, res) => {
     const { email } = req.body;
-    const user = await USER.findOne({email});
-    if(!user){
+    const user = await USER.findOne({ email });
+    if (!user) {
         return res.status(404).json({ message: "User not found" });
     }
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit OTP
     user.resetPasswordToken = otp;
-    user.resetPasswordExpiresAt = Date.now()+10*60*1000; //10min
-    sendPasswordResetEmail(user,otp,email)
+    user.resetPasswordExpiresAt = Date.now() + 10 * 60 * 1000; //10min
+    sendPasswordResetEmail(user, otp, email)
     await user.save();
 
     res.status(200).json({ message: "OTP sent to email." });
@@ -232,29 +239,29 @@ router.post("/change-password", verifyToken, async (req, res) => {
     }
 });
 
-router.get("/check-auth",verifyToken,async(req,res)=>{
-	console.log("check auth routed hitted...")
+router.get("/check-auth", verifyToken, async (req, res) => {
+    console.log("check auth routed hitted...")
 
     try {
-		const user = await USER.findById(req.userId).select("-password");
-		if (!user) {
-			return res.status(400).json({ success: false, error:"User not found" });
-		}
+        const user = await USER.findById(req.userId).select("-password");
+        if (!user) {
+            return res.status(400).json({ success: false, error: "User not found" });
+        }
 
-		res.status(200).json({ success: true, user });
-	} catch (error) {
-		console.log("Error in checkAuth ", error);
-		res.status(400).json({ success: false, message: error.message });
-	}
+        res.status(200).json({ success: true, user });
+    } catch (error) {
+        console.log("Error in checkAuth ", error);
+        res.status(400).json({ success: false, message: error.message });
+    }
 })
 router.get("/logout", (req, res) => {
-  res.clearCookie("token", {
-    httpOnly: true,
-    sameSite: "Lax", // or "Strict" or "None" based on frontend domain and cross-site settings
-    // secure: process.env.NODE_ENV === "production", // only true in production
-    secure: false, // only true in production
-  });
+    res.clearCookie("token", {
+        httpOnly: true,
+        sameSite: "Lax", // or "Strict" or "None" based on frontend domain and cross-site settings
+        // secure: process.env.NODE_ENV === "production", // only true in production
+        secure: false, // only true in production
+    });
 
-  res.status(200).json({ message: "Logged out successfully" });
+    res.status(200).json({ message: "Logged out successfully" });
 });
 module.exports = router;

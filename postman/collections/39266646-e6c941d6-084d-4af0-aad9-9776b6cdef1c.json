@@ -19,7 +19,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Mohit Soni\",\r\n    \"email\": \"new@gmail.com\",\r\n    \"password\":\"password\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Mohit Soni 2\",\r\n    \"email\": \"mohit@gmail.com\",\r\n    \"password\":\"password\"\r\n}\r\n// {\r\n//     \"name\": \"Mohit Soni\",\r\n//     \"email\": \"one@gmail.com\",\r\n//     \"password\":\"password\"\r\n// }\r\n// {\r\n//     \"name\": \"Mohit Soni (admin)\",\r\n//     \"email\": \"admin@gmail.com\",\r\n//     \"password\":\"admin\",\r\n//     \"role\":\"admin\"\r\n// }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -27,12 +27,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/signup",
-							"protocol": "http",
+							"raw": "https://geopulse-165u.onrender.com/signup",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"geopulse-165u",
+								"onrender",
+								"com"
 							],
-							"port": "8080",
 							"path": [
 								"signup"
 							]
@@ -51,7 +52,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "// {\r\n//     \"email\" : \"mohitsonip1847@gmail.com\",\r\n//     \"password\" : \"321\"\r\n// }\r\n// {\r\n//     \"email\":\"soni.mohit0413@gmail.com\",\r\n//     \"password\":\"password\"\r\n// }\r\n{\r\n    \"email\":\"new@gmail.com\",\r\n    \"password\":\"password\"\r\n}\r\n",
+							"raw": "// {\r\n//     \"email\" : \"mohitsonip1847@gmail.com\",\r\n//     \"password\" : \"Indore@123\"\r\n// }\r\n// {\r\n//     \"email\":\"soni.mohit0413@gmail.com\",\r\n//     \"password\":\"password\"\r\n// }\r\n// {\r\n//     \"email\":\"new@gmail.com\",\r\n//     \"password\":\"password\"\r\n// }\r\n{\r\n \"email\": \"mohit@gmail.com\",\r\n \"password\" : \"password\"\r\n\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -59,12 +60,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/signin",
-							"protocol": "http",
+							"raw": "https://geopulse-165u.onrender.com/signin",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"geopulse-165u",
+								"onrender",
+								"com"
 							],
-							"port": "8080",
 							"path": [
 								"signin"
 							]
@@ -479,6 +481,63 @@
 				}
 			],
 			"id": "39266646-c83a0c47-e9ce-4224-b9fe-a95a197c16c7"
+		},
+		{
+			"name": "Location",
+			"item": [
+				{
+					"name": "update-location",
+					"id": "39266646-6a4d507c-add6-4a36-aea9-fe2a10c6f64c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODNiNzAyNzllZmE1YTE1MzEwNmQxNDgiLCJpYXQiOjE3NDg3Nzc5NDQsImV4cCI6MTc0OTM4Mjc0NH0.lCSq2Cu1k7lEauqKvF8_ixYCSxi5O10K_LVwC7eDnLM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"tagId\": \"Tag02\",\r\n  \"latitude\":\"22.704331\",\r\n  \"longitude\":\" 75.810621\",\r\n  \"speed\":\"2\",\r\n  \"battery\":\"99\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/location/update-loc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"location",
+								"update-loc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get tag latest location",
+					"id": "39266646-748b513e-3a70-4a26-8b5a-bde9b1c99739",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"id": "39266646-5ca29f3c-b850-4710-863a-6b8cbf6cdcc2"
 		}
 	]
 }
