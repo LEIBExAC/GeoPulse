@@ -19,7 +19,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Mohit Soni\",\r\n    \"email\": \"new@gmail.com\",\r\n    \"password\":\"password\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Mohit Soni 2\",\r\n    \"email\": \"mohit@gmail.com\",\r\n    \"password\":\"password\"\r\n}\r\n// {\r\n//     \"name\": \"Mohit Soni\",\r\n//     \"email\": \"one@gmail.com\",\r\n//     \"password\":\"password\"\r\n// }\r\n// {\r\n//     \"name\": \"Mohit Soni (admin)\",\r\n//     \"email\": \"admin@gmail.com\",\r\n//     \"password\":\"admin\",\r\n//     \"role\":\"admin\"\r\n// }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -27,12 +27,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/signup",
-							"protocol": "http",
+							"raw": "https://geopulse-165u.onrender.com/signup",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"geopulse-165u",
+								"onrender",
+								"com"
 							],
-							"port": "8080",
 							"path": [
 								"signup"
 							]
@@ -51,7 +52,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "// {\r\n//     \"email\" : \"mohitsonip1847@gmail.com\",\r\n//     \"password\" : \"321\"\r\n// }\r\n// {\r\n//     \"email\":\"soni.mohit0413@gmail.com\",\r\n//     \"password\":\"password\"\r\n// }\r\n{\r\n    \"email\":\"new@gmail.com\",\r\n    \"password\":\"password\"\r\n}\r\n",
+							"raw": "// {\r\n//     \"email\" : \"mohitsonip1847@gmail.com\",\r\n//     \"password\" : \"Indore@123\"\r\n// }\r\n// {\r\n//     \"email\":\"soni.mohit0413@gmail.com\",\r\n//     \"password\":\"password\"\r\n// }\r\n// {\r\n//     \"email\":\"new@gmail.com\",\r\n//     \"password\":\"password\"\r\n// }\r\n{\r\n \"email\": \"mohit@gmail.com\",\r\n \"password\" : \"password\"\r\n\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -59,12 +60,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/signin",
-							"protocol": "http",
+							"raw": "https://geopulse-165u.onrender.com/signin",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"geopulse-165u",
+								"onrender",
+								"com"
 							],
-							"port": "8080",
 							"path": [
 								"signin"
 							]
