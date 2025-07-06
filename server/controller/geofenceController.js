@@ -22,8 +22,10 @@ const createGeofence = async (req, res) => {
       return res.status(404).json({ success: false, message: "Tag not found" });
     }
 
+    // Allowing admins or the owner of the tag to create geofences
     const isAdmin = req.role === "admin";
-    if (!isAdmin) {
+    const isOwner = tag.owner?.toString() === req.userId;
+    if (!isAdmin && !isOwner) {
       return res.status(403).json({ success: false, message: "Access denied" });
     }
 
@@ -112,15 +114,16 @@ const updateGeofence = async (req, res) => {
     const { tagId, geofenceId } = req.params;
     const { type, center, radius, vertices } = req.body;
 
-    if (req.role !== "admin") {
-      return res
-        .status(403)
-        .json({ success: false, message: "Access denied (admin only)" });
-    }
-
     const tag = await Tag.findOne({ tagId });
     if (!tag) {
       return res.status(404).json({ success: false, message: "Tag not found" });
+    }
+
+    isOwner = req.role === "admin" || req.userId === tag.owner?.toString();
+    if (req.role !== "admin" && !isOwner) {
+      return res
+        .status(403)
+        .json({ success: false, message: "Access denied (admin only)" });
     }
 
     const currentGeofence = await Geofence.findOne({ _id: geofenceId, tagId });
