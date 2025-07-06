@@ -2,6 +2,7 @@ const Location = require("../models/location");
 const Tag = require("../models/tag");
 const { simplifyPath } = require("../utility/simplifyPath");
 const { createAlert } = require("../utility/createAlert");
+const reverseGeoCode = require("../utility/reverseGeoCode")
 
 /**
  * @desc Location updation endpoint, retrival endpoint.
@@ -46,6 +47,10 @@ const updateLocation = async (req, res) => {    //api location/update-loc
 
     timestamp = new Date();
 
+    const address = await reverseGeoCode(latitude, longitude); //getting city name and adreess form latitude and longitude
+    console.log(address)
+
+
     const location = new Location({
       tagId,
       tagPrimaryId: tag._id, // Store the primary ID of the tag for reference
@@ -65,6 +70,15 @@ const updateLocation = async (req, res) => {    //api location/update-loc
         location: {
           type: "Point",
           coordinates: [longitude, latitude],
+          address: {
+            display_name: address.display_name,
+            city: address.city,
+            colony: address.colony,
+            postcode: address.postcode,
+            country: address.country,
+            street : address.street,
+            state:address.state
+          }
         },
         battery,
         lastSeen: timestamp,

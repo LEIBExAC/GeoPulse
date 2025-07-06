@@ -1,16 +1,13 @@
 import React from 'react';
-import { Dropdown } from 'react-bootstrap';
-import {
-  FaEllipsisV, FaClock, FaMapMarkerAlt, FaBatteryThreeQuarters,
-  FaPencilAlt, FaTrashAlt
-} from 'react-icons/fa';
+import { Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { FaEllipsisV, FaClock, FaMapMarkerAlt, FaBatteryThreeQuarters, FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { BsFillGeoFill } from 'react-icons/bs';
 import { MdSpeed, MdNotificationsActive } from 'react-icons/md';
 import { BiHistory } from 'react-icons/bi';
 import { IoMdLocate } from 'react-icons/io';
 import { formatLastLogin } from '../../utility/formatLastLogin';
 
-export default function TagCard({tag}) {
+export default function TagCard({ tag }) {
   return (
     <div className="card shadow-sm p-3 position-relative">
       {/* Header */}
@@ -36,54 +33,43 @@ export default function TagCard({tag}) {
 
       {/* Info */}
       {/* Info Section */}
-      <div className="row row-cols-1 row-cols-md-2 small">
-        {/* Left Info */}
-        <div className="col mb-2">
-          <div className="mb-1">
-            <FaBatteryThreeQuarters className="me-2 text-success" />
-            Battery: <strong>{tag.battery}%</strong>
+
+      <div className="tag-info-grid mb-2" style={gridStyle}>
+        <div style={labelStyle}><FaBatteryThreeQuarters className="me-2 text-success" />Battery</div>
+        <div style={valueStyle}>{tag.battery}%</div>
+
+        <div style={labelStyle}><span className="text-success me-2">✅</span>Status</div>
+        <div style={valueStyle}>{tag.status}</div>
+
+        <OverlayTrigger
+          placement="right"
+          overlay={
+            <Tooltip id={`tooltip-location-${tag.tagId}`}>
+              <div className="bg-light text-dark p-1  border rounded shadow-sm">
+                {tag.location?.address?.display_name || "Full address not available"}
+              </div>
+            </Tooltip>
+          }
+        >
+          <div style={labelStyle}>
+            <FaMapMarkerAlt className="me-2 text-danger" />Location
           </div>
-          <div className="mb-1">
-            <span className="text-success">✅</span>
-            Status: <strong>{tag.status}</strong>
-          </div>
-          <div>
-            <FaMapMarkerAlt className="me-2 text-danger" />
-            Location: <strong>Indore</strong>
-          </div>
+        </OverlayTrigger>
+
+        <div style={valueStyle}>
+          {tag.location?.address?.colony || "Unknown Colony"},{" "}
+          {tag.location?.address?.city || "Unknown City"}
         </div>
 
-        {/* Right Info */}
-        <div className="col mb-2 border-start d-none d-md-block ps-md-3">
-          <div className="mb-1">
-            <MdSpeed className="me-2 text-danger" />
-            Speed: <strong>2.3Km/hr</strong>
-          </div>
-          <div className="mb-1">
-            <BsFillGeoFill className="me-2 text-secondary" />
-            Geofence: <strong>Inside Zone-3</strong>
-          </div>
-          <div>
-            <FaClock className="me-2 text-muted" />
-            Updated: <strong>{formatLastLogin(tag.lastSeen)}</strong>
-          </div>
-        </div>
 
-        {/* Same Right Info for Mobile (without border) */}
-        <div className="col d-md-none">
-          <div className="mb-1">
-            <MdSpeed className="me-2 text-danger" />
-            Speed: <strong>2.3 km/h</strong>
-          </div>
-          <div className="mb-1">
-            <BsFillGeoFill className="me-2 text-secondary" />
-            Geofence: <strong>Inside Zone-3</strong>
-          </div>
-          <div>
-            <FaClock className="me-2 text-muted" />
-            Updated: <strong>{formatLastLogin(tag.lastSeen)}</strong>
-          </div>
-        </div> 
+        <div style={labelStyle}><MdSpeed className="me-2 text-danger" />Speed</div>
+        <div style={valueStyle}>2.3 Km/hr</div>
+
+        <div style={labelStyle}><BsFillGeoFill className="me-2 text-secondary" />Geofence</div>
+        <div style={valueStyle}>Inside Zone-3</div>
+
+        <div style={labelStyle}><FaClock className="me-2 text-muted" />Updated</div>
+        <div style={valueStyle}>{formatLastLogin(tag.lastSeen)}</div>
       </div>
 
 
@@ -108,3 +94,21 @@ export default function TagCard({tag}) {
     </div>
   );
 }
+const gridStyle = {
+  display: 'grid',
+  gridTemplateColumns: 'max-content 1fr',
+  columnGap: '1rem',
+  rowGap: '0.5rem',
+  fontSize: '0.875rem',
+};
+
+const labelStyle = {
+  fontWeight: 600,
+  whiteSpace: 'nowrap',
+  display: 'flex',
+  alignItems: 'center',
+};
+
+const valueStyle = {
+  wordBreak: 'break-word',
+};

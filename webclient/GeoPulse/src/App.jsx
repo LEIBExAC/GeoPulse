@@ -24,6 +24,7 @@ import AdminTagList from './pages/admin/AdminTagList';
 import TagDetailsPage from "./pages/common/tag/TagDetailsPage";
 import TagCard from "./components/cards/TagCard";
 import TagLiveLocation from "./pages/user/TagLiveLocation";
+import TagLocationHistory from "./pages/user/TagLocationHistory";
 
 
 function App() {
@@ -83,6 +84,7 @@ function App() {
         <Route path="/features" element={<Feature />} />
         <Route path="/services" element={<Services />} />
         <Route path="/about-us" element={<AboutUs />} />
+       
         <Route path="/contact" element={<Contact />} />
         {/* TODO: Have to fix this route, that it will only open if user has yet to verify their Email otherwise route back to Landing Page */}
         <Route path="/verify-email" element={<VerifyOTP />} />
@@ -151,6 +153,16 @@ function App() {
             <ProtectedRoute>
               <UserRoute>
                 <MyTag />
+              </UserRoute>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/his"
+          element={
+            <ProtectedRoute>
+              <UserRoute>
+                <TagLocationHistory/>
               </UserRoute>
             </ProtectedRoute>
           }

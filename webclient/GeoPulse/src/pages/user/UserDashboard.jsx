@@ -15,16 +15,17 @@ import TagPopup from '../../utility/TagPopup';
 
 export default function UserDashboard() {
   const { user, isAdmin } = useAuthStore();
-  const DEFAULT_COORDINATES = { latitude: 22.696970409094032, longitude: 76.12557707999811 }; 
+  const DEFAULT_COORDINATES = { latitude: 20.93164717617289, longitude: 77.75281489822851 };
   const [userGeoCoordinates, setuserGeoCoordinates] = useState(null)
   const [loading, setLoading] = useState(true);
-  const [tags, setTags] = useState([])
+  const [tags, setTags] = useState([]);
 
 
   useEffect(() => {
     const fetchLocation = async () => {
       try {
         const { latitude, longitude } = await getUserLocation();
+        console.log("Fetched location coordinates of user : 1. Lattitude" + latitude + "longitude" + longitude )
         setuserGeoCoordinates({ latitude: latitude, longitude: longitude });
       } catch (err) {
         // setLocationError(err.message);
@@ -93,7 +94,7 @@ export default function UserDashboard() {
                 <div className="mt-3 d-flex flex-wrap gap-4 text-muted">
                   <div><strong>Last Login:</strong> {formatLastLogin(user.lastLogin)}</div>
                   <div><strong>Role:</strong> {user.role.charAt(0).toUpperCase() + user.role.slice(1)}</div>
-                  <div><strong>Device Connected:</strong> 3 Tags</div>
+                  <div><strong>Device Connected:</strong> {tags.length}{" "}Tags</div>
                 </div>
                 <div className="mt-3 d-flex flex-wrap gap-2">
                   <button className="btn btn-sm btn-outline-primary">Add New Tag</button>

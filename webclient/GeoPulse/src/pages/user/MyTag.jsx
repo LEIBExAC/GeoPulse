@@ -93,7 +93,7 @@ export default function MyTag() {
           <div className="d-flex flex-wrap gap-5 justify-content-flex-start align-items-center mt-4 ">
             {tags.length > 0 ? (
               tags.map((tag) => (
-                <div className="flex-grow-1" key = {tag._id} style={{ minWidth: '280px', maxWidth: '410px', flexBasis: '100%' }}>
+                <div className="flex-grow-1" key = {tag._id} style={{ minWidth: '280px', maxWidth: '400px', flexBasis: '100%' }}>
                   <TagCard tag={tag} />
                 </div>
               ))

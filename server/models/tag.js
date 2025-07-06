@@ -45,6 +45,15 @@ const tagSchema = new mongoose.Schema({
       required: true,
       default: [0, 0],
     },
+    address:{
+      display_name:String,
+      street:String,
+      colony:String,
+      city:String,
+      state:String,
+      country:String,
+      postcode:String
+    }
   },
   ringStatus: {
     type: Boolean,
