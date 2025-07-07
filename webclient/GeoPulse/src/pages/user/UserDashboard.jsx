@@ -57,7 +57,7 @@ export default function UserDashboard() {
   if (loading) {
     return (
       <div className="p-5 text-muted text-center">
-        📍 loading...
+        📍 loading... Getting your location
       </div>
     );
   }

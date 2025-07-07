@@ -13,9 +13,9 @@ const generateTokenAndSetCookie = (res, userId, user) => {
   );
   res.cookie("token", token, {
     maxAge: 7 * 24 * 60 * 60 * 1000, // Cookie expires in 7 days
-    httpOnly: false, // Ensure the cookie is only accessible via HTTP requests, not client-side JS
-    secure: false, // Set to false for development over HTTP
-    sameSite: "Lax", // Helps with cross-origin requests while keeping some protection
+    httpOnly: true, // Ensure the cookie is only accessible via HTTP requests, not client-side JS
+    secure: true, // Set to false for development over HTTP
+    sameSite: "None", // Helps with cross-origin requests while keeping some protection
   });
 
   return token; // Return the token for further use

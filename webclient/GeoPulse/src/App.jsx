@@ -44,6 +44,7 @@ import UserTagList from "./pages/user/UserTagList";
 // import TagCard from "./components/cards/TagCard";
 // import TagLiveLocation from "./pages/user/TagLiveLocation";
 import TagLocationHistory from "./pages/user/TagLocationHistory";
+import TagHistorySearch from "./pages/user/TagHistorySearch";
 
 
 function App() {
@@ -203,11 +204,21 @@ function App() {
           }
         />
         <Route
-          path="/his"
+          path="/tag/history/"
           element={
             <ProtectedRoute>
               <UserRoute>
                 <TagLocationHistory/>
+              </UserRoute>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tag/history-search/"
+          element={
+            <ProtectedRoute>
+              <UserRoute>
+                <TagHistorySearch/>
               </UserRoute>
             </ProtectedRoute>
           }
