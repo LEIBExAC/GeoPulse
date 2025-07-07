@@ -283,7 +283,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"activationCode\" : \"35017203\",\r\n    \"tagId\" : \"ThisTagId4\" \r\n\r\n}",
+							"raw": "{\r\n    \"activationCode\" : \"46993418\",\r\n    \"tagId\" : \"Tag01\" \r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -291,12 +291,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/tag/activate",
-							"protocol": "http",
+							"raw": "{{server_url}}/tag/activate",
 							"host": [
-								"localhost"
+								"{{server_url}}"
 							],
-							"port": "8080",
 							"path": [
 								"tag",
 								"activate"
