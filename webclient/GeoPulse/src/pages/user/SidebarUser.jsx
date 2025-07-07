@@ -47,6 +47,7 @@ export default function SidebarUser() {
                         <Nav.Link as={Link} to="/add-new-tag" className="sidebar-user__link">Add Tag</Nav.Link>
                         <Nav.Link as={Link} to="/geofence" className="sidebar-user__link">Geofence</Nav.Link>
                         <Nav.Link as={Link} to="/profile" className="sidebar-user__link">Profile</Nav.Link>
+                        <Nav.Link as={Link} to="/tag/history-search" className="sidebar-user__link">History</Nav.Link>
                         <Nav.Link className="sidebar-user__link" onClick={() => setShowLogoutModal(true)}>Logout</Nav.Link>
                     </Nav>
                 </div>

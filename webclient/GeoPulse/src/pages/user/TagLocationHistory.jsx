@@ -3,9 +3,10 @@ import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet"
 import { Spinner } from "react-bootstrap";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { backend_url } from "../../assets/store/keyStore";
+import { useLocation } from "react-router-dom";
+import { fetchTagLocationHistory } from "../../assets/api/locApi"; // ✅ imported cleanly
 
-// Fix default marker icon issue in React Leaflet
+// Fix Leaflet marker issue
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
@@ -13,49 +14,39 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
 });
 
-export default function TagLocationHistory({ tagId = "Tag01" }) {
+export default function TagLocationHistory() {
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+
+  const tagId = params.get("tagId");
+  const from = params.get("from");
+  const to = params.get("to");
+
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchHistory = async () => {
+    const loadHistory = async () => {
       if (!tagId) return;
-      try {
-        setLoading(true);
-        const response = await fetch(`${backend_url}/location/${tagId}/history`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        });
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+      setLoading(true);
+      const res = await fetchTagLocationHistory(tagId, from, to);
 
-        const data = await response.json();
-        console.log("API Response:", data);
-
-        if (data.success && Array.isArray(data.data)) {
-          // Sort by timestamp ascending (oldest first)
-          const sorted = [...data.data].sort(
-            (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
-          );
-          setHistory(sorted);
-        } else {
-          setHistory([]);
-        }
-      } catch (error) {
-        console.error("Error fetching location history", error);
+      if (res.success) {
+        const sorted = [...res.data].sort(
+          (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
+        );
+        setHistory(sorted);
+      } else {
+        console.error("History fetch failed:", res.message);
         setHistory([]);
-      } finally {
-        setLoading(false);
       }
+
+      setLoading(false);
     };
 
-    fetchHistory();
-  }, [tagId]);
+    loadHistory();
+  }, [tagId, from, to]);
 
   if (loading) {
     return (
@@ -70,11 +61,9 @@ export default function TagLocationHistory({ tagId = "Tag01" }) {
     return <div className="text-center py-5 text-muted">No history available.</div>;
   }
 
-  // Get polyline for full path
   const polylinePositions = history.map((h) => [h.coordinates[1], h.coordinates[0]]);
   const centerPosition = polylinePositions.length > 0 ? polylinePositions[0] : [0, 0];
 
-  // Filter for first-time arrival at each unique coordinate
   const seenCoords = new Set();
   const firstArrivalHistory = history.filter((loc) => {
     const key = `${loc.coordinates[0]},${loc.coordinates[1]}`;
@@ -98,10 +87,8 @@ export default function TagLocationHistory({ tagId = "Tag01" }) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {/* Full path */}
         <Polyline positions={polylinePositions} color="blue" />
 
-        {/* First-time arrival markers */}
         {firstArrivalHistory.map((loc, index) => (
           <Marker key={index} position={[loc.coordinates[1], loc.coordinates[0]]}>
             <Popup>

@@ -6,8 +6,10 @@ import { MdSpeed, MdNotificationsActive } from 'react-icons/md';
 import { BiHistory } from 'react-icons/bi';
 import { IoMdLocate } from 'react-icons/io';
 import { formatLastLogin } from '../../utility/formatLastLogin';
+import { useNavigate } from 'react-router-dom';
 
 export default function TagCard({ tag }) {
+  const navigate = useNavigate();
   return (
     <div className="card shadow-sm p-3 position-relative">
       {/* Header */}
@@ -81,7 +83,7 @@ export default function TagCard({ tag }) {
         <button className="btn btn-link p-0 text-decoration-none d-flex align-items-center gap-1">
           <MdNotificationsActive size={16} /> Ring
         </button>
-        <button className="btn btn-link p-0 text-decoration-none d-flex align-items-center gap-1">
+        <button className="btn btn-link p-0 text-decoration-none d-flex align-items-center gap-1" onClick={() => navigate(`/tag/history?tagId=${tag.tagId}`)}>
           <BiHistory size={16} /> History
         </button>
         <button className="btn btn-link p-0 text-decoration-none d-flex align-items-center gap-1">
