@@ -13,6 +13,7 @@ import {
     getGeofenceByIdAPI,
     updateGeofenceAPI
 } from '../../../assets/api/geofenceApi';
+import SidebarUser from '../../user/SidebarUser';
 
 const GeofenceEdit = () => {
     const { tagId, geofenceId } = useParams();
@@ -93,74 +94,79 @@ const GeofenceEdit = () => {
 
     return (
 
-        <div className="container mt-4"> <h3>Edit Geofence</h3>
+        <div className="d-flex">
 
-            {message && <div className="alert alert-danger">{message}</div>}
+            <SidebarUser />
+            <div className='container mt-4 flex-grow-1 max-h-100 overflow-hidden'>
+                <h3>Edit Geofence</h3>
+                {message && <div className="alert alert-danger">{message}</div>}
 
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label>Geofence Type</label>
-                    <select
-                        className="form-select"
-                        value={type}
-                        onChange={(e) => {
-                            setType(e.target.value);
-                            setCenter(null);
-                            setVertices([]);
-                        }}
-                    >
-                        <option value="circular">Circular</option>
-                        <option value="polygonal">Polygonal</option>
-                    </select>
-                </div>
-
-                {type === 'circular' && center && (
+                <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <label>Radius (meters)</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            value={radius}
-                            onChange={(e) => setRadius(Number(e.target.value))}
-                        />
+                        <label>Geofence Type</label>
+                        <select
+                            className="form-select"
+                            value={type}
+                            onChange={(e) => {
+                                setType(e.target.value);
+                                setCenter(null);
+                                setVertices([]);
+                            }}
+                        >
+                            <option value="circular">Circular</option>
+                            <option value="polygonal">Polygonal</option>
+                        </select>
                     </div>
-                )}
 
-                <MapContainer
-                    center={mapCenter}
-                    zoom={13}
-                    style={{ height: '400px', width: '100%' }}
-                >
-                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                    <MapClickHandler />
                     {type === 'circular' && center && (
-                        <Circle center={center} radius={radius} />
+                        <div className="mb-3">
+                            <label>Radius (meters)</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                value={radius}
+                                onChange={(e) => setRadius(Number(e.target.value))}
+                            />
+                        </div>
                     )}
-                    {type === 'polygonal' && vertices.length > 0 && (
-                        <>
-                            <Polygon positions={vertices} />
-                            {vertices.map((v, i) => (
-                                <Marker key={i} position={v} />
-                            ))}
-                        </>
-                    )}
-                </MapContainer>
 
-                <div className="mt-3">
-                    <button type="submit" className="btn btn-primary">
-                        Update Geofence
-                    </button>
-                    <button
-                        type="button"
-                        className="btn btn-secondary ms-2"
-                        onClick={() => navigate(`/geofence/${geofenceId}`)}
+                    <MapContainer
+                        center={mapCenter}
+                        zoom={13}
+                        style={{ height: '400px', width: '100%' }}
                     >
-                        Cancel
-                    </button>
-                </div>
-            </form>
+                        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                        <MapClickHandler />
+                        {type === 'circular' && center && (
+                            <Circle center={center} radius={radius} />
+                        )}
+                        {type === 'polygonal' && vertices.length > 0 && (
+                            <>
+                                <Polygon positions={vertices} />
+                                {vertices.map((v, i) => (
+                                    <Marker key={i} position={v} />
+                                ))}
+                            </>
+                        )}
+                    </MapContainer>
 
-        </div>);
+                    <div className="mt-3">
+                        <button type="submit" className="btn btn-primary">
+                            Update Geofence
+                        </button>
+                        <button
+                            type="button"
+                            className="btn btn-secondary ms-2"
+                            onClick={() => navigate(`/geofence/${geofenceId}`)}
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    );
 };
 
 export default GeofenceEdit;

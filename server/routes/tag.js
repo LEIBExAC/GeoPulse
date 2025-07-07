@@ -90,7 +90,7 @@ router.post("/tag/activate", verifyToken, async (req, res) => {
     return res.status(500).json({ error: "Internal server error." });
   }
 });
- 
+
 // Fetching all tags for admin or owned by user(adding for owner just in case - not actually needed and used)
 router.get("/tags", verifyToken, async (req, res) => {
   try {
@@ -154,10 +154,21 @@ router.get("/tag/:id", verifyToken, async (req, res) => {
   const { id } = req.params;
 
   try {
-    const tag = await TAG.findById(id)
-      .populate("owner", "name email")
-      .populate("sharedWith", "name email");
-
+    /**
+     * Added both id and tagId checks to support both ObjectId and custom tagId.
+     * Added this beacause I used tagId(in GeoFence and Location) and here _id is being used.
+     * This way we can fetch tag by either id or tagId.
+    */
+    let tag;
+    if (typeof id !== "string") {
+      tag = await TAG.findById(id)
+        .populate("owner", "name email")
+        .populate("sharedWith", "name email");
+    } else {
+      tag = await TAG.findOne({ tagId: id })
+        .populate("owner", "name email")
+        .populate("sharedWith", "name email");
+    }
     if (!tag) {
       return res.status(404).json({ message: "Tag not found." });
     }

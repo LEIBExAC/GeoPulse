@@ -1,35 +1,48 @@
 import React from "react"; // ← Required for JSX
 import { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "leaflet/dist/leaflet.css";
 import Landing from './pages/common/Landing';
 import './App.css';
-import SignUp from './pages/common/Signup';
-import Login from './pages/common/Login';
-import VerifyOTP from './pages/common/VerifyOTP';
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import AboutUs from './pages/common/AboutUs';
-import Contact from './pages/common/Contact';
-import Services from './pages/common/Services';
-import Feature from './pages/common/Feature';
-import UserDashboard from "./pages/user/UserDashboard";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import PageNotFound from "./pages/common/PageNotFound";
-import AddTag from "./pages/user/AddTag";
-import MyTag from "./pages/user/MyTag";
-import Profile from "./pages/user/Profile";
+import {
+  SignUp,
+  Login,
+  VerifyOTP,
+  AboutUs,
+  Contact,
+  Services,
+  Feature,
+  UserDashboard,
+  AdminDashboard,
+  PageNotFound,
+  AddTag,
+  MyTag,
+  Profile,
+  AdminTagList,
+  TagDetailsPage,
+  GeofenceList,
+  GeofenceCreate,
+  GeofenceEdit,
+  GeofenceDetailPage,
+  GeofenceAlertsPage,
+  TagCard,
+  TagLiveLocation,
+  TagGeofenceOverview,
+} from "./index";
 import { useAuthStore } from './assets/store/authStore';
+// Same var important twice? From user/ and admin/ ?
 import CreateTagPage from "./pages/admin/CreateTag";
 import UserTagList from "./pages/user/UserTagList";
-import AdminTagList from './pages/admin/AdminTagList';
-import TagDetailsPage from "./pages/common/tag/TagDetailsPage";
-import GeofenceList from "./pages/common/geofence/GeofenceList";
-import GeofenceCreate from "./pages/common/geofence/GeofenceCreate";
-import GeofenceEdit from "./pages/common/geofence/GeofenceEdit";
-import GeofenceDetailPage from "./pages/common/geofence/GeofenceDetail";
-import GeofenceAlertsPage from "./pages/common/geofence/GeofenceAlerts";
-import TagCard from "./components/cards/TagCard";
-import TagLiveLocation from "./pages/user/TagLiveLocation";
+// import AdminTagList from './pages/admin/AdminTagList';
+// import TagDetailsPage from "./pages/common/tag/TagDetailsPage";
+// import GeofenceList from "./pages/common/geofence/GeofenceList";
+// import GeofenceCreate from "./pages/common/geofence/GeofenceCreate";
+// import GeofenceEdit from "./pages/common/geofence/GeofenceEdit";
+// import GeofenceDetailPage from "./pages/common/geofence/GeofenceDetail";
+// import GeofenceAlertsPage from "./pages/common/geofence/GeofenceAlerts";
+// import TagCard from "./components/cards/TagCard";
+// import TagLiveLocation from "./pages/user/TagLiveLocation";
 import TagLocationHistory from "./pages/user/TagLocationHistory";
 
 
@@ -51,7 +64,7 @@ function App() {
 
 
   const ProtectedRoute = ({ children }) => {
-    if (!isAuthenticated || !user)  {
+    if (!isAuthenticated || !user) {
       console.log("Redirecting to Signin...");
       return <Navigate to="/signin" replace />; // Redirect to signin if not authenticated
     }
@@ -85,19 +98,44 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/test" element={<TagCard />} />
-        <Route path="/signin" element={<Login />} />
+        <Route
+          path="/signin"
+          element={
+            isAuthenticated ? (
+              <Navigate to="/user-dashboard" replace />
+            ) : (
+              <Login />
+            )
+          }
+        />
         <Route path="/admin-signin" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route
+          path="/signup"
+          element={
+            isAuthenticated ? (
+              <Navigate to={isAdmin ? "/admin-dashboard" : "/user-dashboard"} replace />
+            ) : (
+              <SignUp />
+            )
+          }
+        />
         <Route path="/features" element={<Feature />} />
         <Route path="/services" element={<Services />} />
         <Route path="/about-us" element={<AboutUs />} />
        
         <Route path="/contact" element={<Contact />} />
-        {/* TODO: Have to fix this route, that it will only open if user has yet to verify their Email otherwise route back to Landing Page */}
-        <Route path="/verify-email" element={<VerifyOTP />} />
-        {/* <Route path="/user-dashboard" element={<UserDashboard />} /> */}
-        {/* <Route path="/admin-dashboard" element={<AdminDashboard />} /> */}
-        
+        <Route
+          path="/verify-email"
+          element={
+            !isAuthenticated ? (
+              <Navigate to="/signin" replace />
+            ) : user?.isVerified ? (
+              <Navigate to="/" replace />
+            ) : (
+              <VerifyOTP />
+            )
+          }
+        />
 
         <Route
           path="/user-dashboard"
@@ -119,7 +157,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-       
+
         <Route
           path="/profile"
           element={
@@ -152,7 +190,7 @@ function App() {
           }
         />
 
-        
+
 
         <Route
           path="/my-tags"
@@ -179,7 +217,7 @@ function App() {
           element={
             <ProtectedRoute>
               <UserRoute>
-                <TagLiveLocation/>
+                <TagLiveLocation />
               </UserRoute>
             </ProtectedRoute>
           }
@@ -244,6 +282,16 @@ function App() {
         />
 
         <Route path="/tag/:tagId/geofences" element={<GeofenceList />} />
+
+        {/* TODO: Do this one. */}
+        <Route
+          path="/geofence"
+          element={
+            <ProtectedRoute>
+              <TagGeofenceOverview />
+            </ProtectedRoute>
+          }
+        />
 
         <Route path="*" element={<PageNotFound />} />
       </Routes>

@@ -10,6 +10,7 @@ import {
 } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { createGeofenceAPI } from '../../../assets/api/geofenceApi';
+import SidebarUser from '../../user/SidebarUser';
 
 const GeofenceCreate = () => {
     const { tagId } = useParams();
@@ -70,75 +71,80 @@ const GeofenceCreate = () => {
 
     return (
 
-        <div className="container mt-4"> <h3>Create Geofence</h3>
+        <div className="d-flex">
+            <SidebarUser />
+            <div className='container flex-grow-1 mt-4' style={{ maxHeight: 'calc(100vh - 80px)', overflowY: 'auto' }}>
+                <h3>Create Geofence</h3>
 
-            {message && <div className="alert alert-warning">{message}</div>}
+                {message && <div className="alert alert-warning">{message}</div>}
 
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label>Geofence Type</label>
-                    <select
-                        className="form-select"
-                        value={type}
-                        onChange={(e) => {
-                            setType(e.target.value);
-                            setVertices([]);
-                            setCenter(null);
-                        }}
-                    >
-                        <option value="circular">Circular</option>
-                        <option value="polygonal">Polygonal</option>
-                    </select>
-                </div>
-
-                {type === 'circular' && center && (
+                <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <label>Radius (meters)</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            value={radius}
-                            onChange={(e) => setRadius(Number(e.target.value))}
-                        />
+                        <label>Geofence Type</label>
+                        <select
+                            className="form-select"
+                            value={type}
+                            onChange={(e) => {
+                                setType(e.target.value);
+                                setVertices([]);
+                                setCenter(null);
+                            }}
+                        >
+                            <option value="circular">Circular</option>
+                            <option value="polygonal">Polygonal</option>
+                        </select>
                     </div>
-                )}
 
-                <MapContainer
-                    center={mapCenter}
-                    zoom={13}
-                    style={{ height: '400px', width: '100%' }}
-                >
-                    <TileLayer
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
-                    <MapClickHandler />
                     {type === 'circular' && center && (
-                        <Circle center={center} radius={radius} />
+                        <div className="mb-3">
+                            <label>Radius (meters)</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                value={radius}
+                                onChange={(e) => setRadius(Number(e.target.value))}
+                            />
+                        </div>
                     )}
-                    {type === 'polygonal' && vertices.length > 0 && (
-                        <>
-                            <Polygon positions={vertices} />
-                            {vertices.map((v, i) => (
-                                <Marker key={i} position={v} />
-                            ))}
-                        </>
-                    )}
-                </MapContainer>
 
-                <div className="mt-3">
-                    <button type="submit" className="btn btn-primary">
-                        Create Geofence
-                    </button>
-                    <button
-                        type="button"
-                        className="btn btn-secondary ms-2"
-                        onClick={() => navigate(`/tag/${tagId}/geofence/${res.geofence._id}`)}
+                    <MapContainer
+                        center={mapCenter}
+                        zoom={13}
+                        style={{ height: '400px', width: '100%' }}
                     >
-                        Cancel
-                    </button>
-                </div>
-            </form>
+                        <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <MapClickHandler />
+                        {type === 'circular' && center && (
+                            <Circle center={center} radius={radius} />
+                        )}
+                        {type === 'polygonal' && vertices.length > 0 && (
+                            <>
+                                <Polygon positions={vertices} />
+                                {vertices.map((v, i) => (
+                                    <Marker key={i} position={v} />
+                                ))}
+                            </>
+                        )}
+                    </MapContainer>
 
-        </div>);
+                    <div className="mt-3">
+                        <button type="submit" className="btn btn-primary">
+                            Create Geofence
+                        </button>
+                        <button
+                            type="button"
+                            className="btn btn-secondary ms-2"
+                            onClick={() => navigate(`/tag/${tagId}/geofence/${res.geofence._id}`)}
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    );
 };
 export default GeofenceCreate;

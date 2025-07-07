@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const TagForm = ({ onSubmit }) => {
-  const [tagId, setName] = useState('');
+  const [tagId, setId] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -12,15 +12,15 @@ const TagForm = ({ onSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-3">
-        <label htmlFor="tagName" className="form-label">Tag Name</label>
+        <label htmlFor="tagId" className="form-label">Tag Id</label>
         <input
           type="text"
           className="form-control"
-          id="tagName"
+          id="tagId"
           value={tagId}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setId(e.target.value)}
           required
-          placeholder="Enter a tag name"
+          placeholder="Enter the Tag Id"
         />
       </div>
 

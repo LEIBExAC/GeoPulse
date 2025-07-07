@@ -1,9 +1,3 @@
+const backend_url = "http://localhost:8080";
 
-
-
-
-const backend_url = "http://localhost:8080"
-
-
-
-export {backend_url }
+export { backend_url };
