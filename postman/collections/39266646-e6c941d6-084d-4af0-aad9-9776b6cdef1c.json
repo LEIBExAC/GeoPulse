@@ -500,7 +500,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"tagId\": \"Tag02\",\r\n  \"latitude\":\"22.704331\",\r\n  \"longitude\":\" 75.810621\",\r\n  \"speed\":\"2\",\r\n  \"battery\":\"99\"\r\n  }",
+							"raw": "// {\r\n//   \"tagId\": \"Tag01\",\r\n//   \"latitude\":\" 22.6800088\",\r\n//   \"longitude\":\" 75.8179866\",\r\n//   \"speed\":\"2\",\r\n//   \"battery\":\"0\"\r\n//   }\r\n{\r\n  \"tagId\": \"Tag01\",\r\n  \"latitude\":\"22.680965885144044\",\r\n  \"longitude\":\"75.81702494133725\",\r\n  \"speed\":\"2\",\r\n  \"battery\":\"10\"\r\n  }\r\n\r\n//  HArsh ka address\r\n// {\r\n//   \"tagId\": \"Tag01\",\r\n//   \"latitude\":\"22.683214762417656\",\r\n//   \"longitude\":\" 75.82926407190958\",\r\n//   \"speed\":\"2\",\r\n//   \"battery\":\"0\"\r\n//   }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -508,12 +508,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/location/update-loc",
-							"protocol": "http",
+							"raw": "{{local_url}}/location/update-loc",
 							"host": [
-								"localhost"
+								"{{local_url}}"
 							],
-							"port": "8080",
 							"path": [
 								"location",
 								"update-loc"
