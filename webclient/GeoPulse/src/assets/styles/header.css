@@ -1,5 +1,5 @@
 
-.navbar .navbar-nav .nav-link:hover {
+/* .navbar .navbar-nav .nav-link:hover {
   color: #3B82F6 !important;
 }
 
@@ -10,4 +10,11 @@
 .navbar .dropdown-item:hover {
   background-color: #e0edff;
   color: #1d4ed8;
+} */
+.profile-image {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e2e8f0;
 }
