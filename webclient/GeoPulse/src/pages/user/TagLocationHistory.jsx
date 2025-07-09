@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
+import React, { useEffect, useState } from 'react';
+import { MapContainer,TileLayer,  Polyline,} from "react-leaflet";
+import SidebarUser from './SidebarUser';
+import "../../assets/styles/user/dashboardRightContentCommon.css";
+import "../../assets/styles/user/HomeDashboard.css";
+import { FaBell } from "react-icons/fa";
+
+
 import { Spinner } from "react-bootstrap";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useLocation } from "react-router-dom";
-import { fetchTagLocationHistory } from "../../assets/api/locApi"; // ✅ imported cleanly
+import { fetchTagLocationHistory } from "../../assets/api/locApi";
 
-// Fix Leaflet marker issue
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
-  iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-});
 
 export default function TagLocationHistory() {
-  const { search } = useLocation();
+
+
+   const { search } = useLocation();
   const params = new URLSearchParams(search);
 
   const tagId = params.get("tagId");
@@ -25,7 +26,9 @@ export default function TagLocationHistory() {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+
+
+useEffect(() => {
     const loadHistory = async () => {
       if (!tagId) return;
 
@@ -61,25 +64,92 @@ export default function TagLocationHistory() {
     return <div className="text-center py-5 text-muted">No history available.</div>;
   }
 
-  const polylinePositions = history.map((h) => [h.coordinates[1], h.coordinates[0]]);
-  const centerPosition = polylinePositions.length > 0 ? polylinePositions[0] : [0, 0];
+  const centerPosition = [history[0].coordinates[1], history[0].coordinates[0]];
 
-  const seenCoords = new Set();
-  const firstArrivalHistory = history.filter((loc) => {
-    const key = `${loc.coordinates[0]},${loc.coordinates[1]}`;
-    if (seenCoords.has(key)) return false;
-    seenCoords.add(key);
-    return true;
-  });
+  const activeSegments = [];
+  const inactiveSegments = [];
+  const thresholdMinutes = 3;
+
+  for (let i = 1; i < history.length; i++) {
+    const prev = history[i - 1];
+    const curr = history[i];
+    const diff = (new Date(curr.timestamp) - new Date(prev.timestamp)) / 60000;
+
+    const segment = [
+      [prev.coordinates[1], prev.coordinates[0]],
+      [curr.coordinates[1], curr.coordinates[0]],
+    ];
+
+    if (diff > thresholdMinutes) {
+      inactiveSegments.push({ segment, data: curr });
+    } else {
+      activeSegments.push({ segment, data: curr });
+    }
+  }
+
+  // Find nearest point from a click
+  const getNearestLocation = (latlng) => {
+    let minDist = Infinity;
+    let nearest = null;
+
+    for (const loc of history) {
+      const d = Math.sqrt(
+        Math.pow(latlng.lat - loc.coordinates[1], 2) +
+        Math.pow(latlng.lng - loc.coordinates[0], 2)
+      );
+      if (d < minDist) {
+        minDist = d;
+        nearest = loc;
+      }
+    }
+    return nearest;
+  };
+
+  const handleSegmentClick = (e) => {
+    const nearest = getNearestLocation(e.latlng);
+    if (!nearest) return;
+
+    L.popup()
+      .setLatLng(e.latlng)
+      .setContent(`
+        <div>
+          <strong>Time:</strong><br />
+          ${new Date(nearest.timestamp).toLocaleString()}<br />
+          <strong>Battery:</strong> ${nearest.battery}%<br />
+          <strong>Speed:</strong> ${nearest.speed} km/h
+        </div>
+      `)
+      .openOn(e.target._map);
+  };
+  
 
   return (
-    <div>
-      <h5 className="mb-3">📍 Tag Movement History</h5>
+    <div className="d-flex align-items-start w-100">
+      {/* Sidebar */}
+      <SidebarUser />
+
+      {/* Right Panel */}
+      <div className="w-100" style={{ height: '100vh', overflowY: 'auto' }}>
+
+        {/* Header */}
+        <div className="d-flex justify-content-between align-items-center border-bottom bg-light dashboard-header pe-5">
+          <div className="fw-semibold fs-5 ms-4 text-dark">GeoPulse</div>
+          <div className="position-relative dashboard-bell">
+            <FaBell className="fs-5 text-dark bell-hover" />
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="dashboard-main-content ms-4 mt-4 me-4">
+           <div>
+<h5 className="text-center mb-4 fw-semibold">
+  📍 Tag Movement History
+</h5>
       <MapContainer
         center={centerPosition}
         zoom={15}
         scrollWheelZoom={true}
-        style={{ height: "500px", width: "100%" }}
+        style={{ height: "calc(100vh - 200px)", width: "100%" }}
         className="rounded shadow-sm"
       >
         <TileLayer
@@ -87,21 +157,69 @@ export default function TagLocationHistory() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        <Polyline positions={polylinePositions} color="blue" />
+        {/* Active segments - visible line */}
+        {activeSegments.map((seg, idx) => (
+          <Polyline
+            key={`a-visible-${idx}`}
+            positions={seg.segment}
+            color="green"
+            weight={4}
+          />
+        ))}
+        {/* Active segments - wide invisible clickable overlay */}
+        {activeSegments.map((seg, idx) => (
+          <Polyline
+            key={`a-click-${idx}`}
+            positions={seg.segment}
+            color="transparent"
+            weight={20}
+            eventHandlers={{ click: handleSegmentClick }}
+          />
+        ))}
 
-        {firstArrivalHistory.map((loc, index) => (
-          <Marker key={index} position={[loc.coordinates[1], loc.coordinates[0]]}>
-            <Popup>
-              <div>
-                <strong>First Arrival:</strong><br />
-                {new Date(loc.timestamp).toLocaleString()}<br />
-                <strong>Battery:</strong> {loc.battery}%<br />
-                <strong>Speed:</strong> {loc.speed} km/h
-              </div>
-            </Popup>
-          </Marker>
+        {/* Inactive segments - visible dashed line */}
+        {inactiveSegments.map((seg, idx) => (
+          <Polyline
+            key={`i-visible-${idx}`}
+            positions={seg.segment}
+            color="red"
+            dashArray="6,10"
+            weight={4}
+          />
+        ))}
+        {/* Inactive segments - wide invisible clickable overlay */}
+        {inactiveSegments.map((seg, idx) => (
+          <Polyline
+            key={`i-click-${idx}`}
+            positions={seg.segment}
+            color="transparent"
+            weight={20}
+            eventHandlers={{ click: handleSegmentClick }}
+          />
         ))}
       </MapContainer>
     </div>
+        </div>
+      </div>
+    </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+// export default function TagLocationHistory() {
+ 
+//   
+
+//   return (
+   
+//   );
+// }

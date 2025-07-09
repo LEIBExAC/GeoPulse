@@ -24,11 +24,11 @@ const reverseGeocode = async (lat, lon) => {
       const address = response.data.address;
 
       return {
-        display_name: response.data.display_name || "Unknown location",
+        display_name: response.data?.display_name || "Unknown location",
         street: address.road || address.street || "N/A",
-        colony: address.suburb || address.neighbourhood || "N/A",
-        city: address.city || address.town || address.village || "N/A",
-        state: address.state || "N/A",
+        colony: address.suburb || address.neighbourhood || address.city_district || "N/A",
+        city: address.city || address.town || address.village || address.county || "N/A",
+        state: address.state || address.state_district || "N/A",
         country: address.country || "N/A",
         postcode: address.postcode || "N/A",
       };
