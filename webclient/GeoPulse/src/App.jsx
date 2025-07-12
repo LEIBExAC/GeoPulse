@@ -5,6 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "leaflet/dist/leaflet.css";
 import Landing from './pages/common/Landing';
 import './App.css';
+import Lottie from 'lottie-react';  // for the Loading Animation
+import loader from "./assets/animation/loader.json"
 import {
   SignUp,
   Login,
@@ -61,7 +63,32 @@ function App() {
     authenticate();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <>
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{
+            height: '100vh',           // Full screen height
+            width: '100vw',            // Full screen width
+            overflow: 'hidden',        // Prevent scrollbars
+          }}
+        >
+          <Lottie
+            animationData={loader}
+            loop
+            autoplay
+            style={{
+              width: '150px',           // Slightly larger, adjusts nicely
+              maxWidth: '60%',          // Responsive on smaller devices
+              height: 'auto',
+            }}
+          />
+        </div>
+      </>
+
+    )
+  };
 
 
   const ProtectedRoute = ({ children }) => {
@@ -123,7 +150,7 @@ function App() {
         <Route path="/features" element={<Feature />} />
         <Route path="/services" element={<Services />} />
         <Route path="/about-us" element={<AboutUs />} />
-       
+
         <Route path="/contact" element={<Contact />} />
         <Route
           path="/verify-email"
@@ -208,7 +235,7 @@ function App() {
           element={
             <ProtectedRoute>
               <UserRoute>
-                <TagLocationHistory/>
+                <TagLocationHistory />
               </UserRoute>
             </ProtectedRoute>
           }
@@ -218,7 +245,7 @@ function App() {
           element={
             <ProtectedRoute>
               <UserRoute>
-                <TagHistorySearch/>
+                <TagHistorySearch />
               </UserRoute>
             </ProtectedRoute>
           }
