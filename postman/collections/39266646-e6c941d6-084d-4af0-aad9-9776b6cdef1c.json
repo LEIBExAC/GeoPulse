@@ -346,7 +346,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/tags/owned/684194cfd805292251763453",
+							"raw": "http://localhost:8080/tags/owned/685841cc0161e4125cee331a",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -355,7 +355,7 @@
 							"path": [
 								"tags",
 								"owned",
-								"684194cfd805292251763453"
+								"685841cc0161e4125cee331a"
 							]
 						}
 					},
@@ -540,7 +540,18 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{server_url}}/location/Tag01/history",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"location",
+								"Tag01",
+								"history"
+							]
+						}
 					},
 					"response": []
 				}
