@@ -528,7 +528,35 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODU4NDFjYzAxNjFlNDEyNWNlZTMzMWEiLCJyb2xlIjoidXNlciIsImlzVmVyaWZpZWQiOnRydWUsImlhdCI6MTc1MTQ3OTQ3OCwiZXhwIjoxNzUyMDg0Mjc4fQ.PRtytvnE1OIGc_yt3FTOVZ-FQhpwkhhvC_czj5Xh8KM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/location/Tag01/latest",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"location",
+								"Tag01",
+								"latest"
+							]
+						}
 					},
 					"response": []
 				},
