@@ -19,7 +19,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Mohit Soni 2\",\r\n    \"email\": \"mohit@gmail.com\",\r\n    \"password\":\"password\"\r\n}\r\n// {\r\n//     \"name\": \"Mohit Soni\",\r\n//     \"email\": \"one@gmail.com\",\r\n//     \"password\":\"password\"\r\n// }\r\n// {\r\n//     \"name\": \"Mohit Soni (admin)\",\r\n//     \"email\": \"admin@gmail.com\",\r\n//     \"password\":\"admin\",\r\n//     \"role\":\"admin\"\r\n// }",
+							"raw": "{\r\n    \"name\": \"Mohit Soni 2\",\r\n    \"email\": \"mohit@gmail.com\",\r\n    \"password\":\"password\",\r\n    \"role\":\"admin\"\r\n}\r\n// {\r\n//     \"name\": \"Mohit Soni\",\r\n//     \"email\": \"one@gmail.com\",\r\n//     \"password\":\"password\"\r\n// }\r\n// {\r\n//     \"name\": \"Mohit Soni (admin)\",\r\n//     \"email\": \"admin@gmail.com\",\r\n//     \"password\":\"admin\",\r\n//     \"role\":\"admin\"\r\n// }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -117,13 +117,13 @@
 						"header": [
 							{
 								"key": "Cookie",
-								"value": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODQxOTdkMmQ4MDUyOTIyNTE3NjM0NzkiLCJpYXQiOjE3NDkxMjkxNzAsImV4cCI6MTc0OTczMzk3MH0.cU9phlbP_KuDYumn0LsnCpBQZ-THn1CcpbcA1Pt4z5Q",
+								"value": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODY4YmRiNTRlOWZiOTllYTYyZmQ3ZmEiLCJyb2xlIjoiYWRtaW4iLCJpc1ZlcmlmaWVkIjpmYWxzZSwiaWF0IjoxNzUxNjk1NjYyLCJleHAiOjE3NTIzMDA0NjJ9.ce_N-eA3g9wjOy2UHxqD1iDcs6KlLXeaxxCj4xBQnws;",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"otp\" : \"342311\"\r\n}",
+							"raw": "{\r\n    \"otp\" : \"719239\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -131,12 +131,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/verify-otp",
-							"protocol": "http",
+							"raw": "{{server_url}}/verify-otp",
 							"host": [
-								"localhost"
+								"{{server_url}}"
 							],
-							"port": "8080",
 							"path": [
 								"verify-otp"
 							]
@@ -314,7 +312,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tagId\" : \"ThisTagId4\"\r\n}",
+							"raw": "{\r\n    \"tagId\" : \"Tag02\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -322,12 +320,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/tag/register",
-							"protocol": "http",
+							"raw": "{{server_url}}/tag/register",
 							"host": [
-								"localhost"
+								"{{server_url}}"
 							],
-							"port": "8080",
 							"path": [
 								"tag",
 								"register"
