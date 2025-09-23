@@ -2,6 +2,7 @@ const express = require("express")
 const mongoose = require("./config/dbconfig")
 const cookieParser = require('cookie-parser');
 const cors = require("cors");
+const FRONT_END_URL = require("./utility/keys")
 
 
 const app = express();
@@ -9,7 +10,7 @@ const port = 8080;
 
 
 app.use(cors({
-  origin: "http://localhost:5173", // your frontend URL
+  origin: FRONT_END_URL, // your frontend URL
   // origin: true, //for testing on postman
   credentials: true, // to allow cookies
 }));

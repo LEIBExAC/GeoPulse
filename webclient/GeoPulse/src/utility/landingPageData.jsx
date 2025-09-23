@@ -69,8 +69,8 @@ export const features = [
  export const team = [
     {
       name: "Mohit Soni",
-      role: "Founder",
-      img: "https://media.licdn.com/dms/image/v2/D4D03AQGHSM7hamqwuw/profile-displayphoto-shrink_200_200/B4DZVcDlWdHwAY-/0/1741006198742?e=1757548800&v=beta&t=44HOK1brQ8ATHKo70SC5k598SiJL9Dgym-YBWLaC29o", // Replace with actual image path
+      role: "Developer",
+      img: "/images/mohit.jpeg", // Replace with actual image path
       desc: "I'm a passionate tech innovator building end-to-end IoT solutions for real-world problems. As the founder of GeoPulse, I aim to create smart, scalable systems that connect people and devices seamlessly.",
       socials: {
         linkedin: "https://www.linkedin.com/in/mohit-soni-8a9441256/",
@@ -80,8 +80,8 @@ export const features = [
     },
     {
       name: "Aditya Chaturvedi",
-      role: "Founder",
-      img: "https://media.licdn.com/dms/image/v2/D4D03AQGHSM7hamqwuw/profile-displayphoto-shrink_200_200/B4DZVcDlWdHwAY-/0/1741006198742?e=1757548800&v=beta&t=44HOK1brQ8ATHKo70SC5k598SiJL9Dgym-YBWLaC29o", // Replace with actual image path
+      role: "Developer",
+      img: "images/aditya.jpeg", // Replace with actual image path
       desc: "Driven by innovation and collaboration, I focus on bringing ideas to life with clean tech, efficient systems, and intuitive design. At GeoPulse, I ensure every tag and line of code solves real problems.",
       socials: {
         linkedin: "#",
