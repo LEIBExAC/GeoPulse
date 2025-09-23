@@ -32,7 +32,7 @@ export default function Footer() {
           <Col md={4} className="text-center text-md-start">
             <h6 className="fw-semibold mb-3">Quick Links</h6>
             <ul className="list-unstyled">
-              {["Home", "Features", "Services", "About Us", "Privacy Policy", "Contact"].map((link, i) => (
+              {["Home", "Features", "About Us", "Privacy Policy", "Contact"].map((link, i) => (
                 <li key={i}>
                   <a href="#" className="text-white-50 text-decoration-none small d-block">
                     {link}

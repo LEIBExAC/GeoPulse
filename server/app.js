@@ -29,6 +29,7 @@ app.use(express.json())
 app.use(cookieParser());
 app.use(require("./routes/auth"))
 app.use(require("./routes/tag"));
+app.use("/contact", require("./routes/contact"));
 app.use("/location", require("./routes/location"))
 app.use("/geofence", require("./routes/geofence"));
 

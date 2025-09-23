@@ -34,9 +34,9 @@ function Header() {
                             <Nav.Link as={Link} to="/features" className="fw-medium mx-lg-2">
                                 Features
                             </Nav.Link>
-                            <Nav.Link as={Link} to="/services" className="fw-medium mx-lg-2">
+                            {/* <Nav.Link as={Link} to="/services" className="fw-medium mx-lg-2">
                                 Services
-                            </Nav.Link>
+                            </Nav.Link> */}
                             <Nav.Link as={Link} to="/about-us" className="fw-medium mx-lg-2">
                                 About Us
                             </Nav.Link>

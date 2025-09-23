@@ -3,10 +3,10 @@ import Header from '../../components/layout/Header'
 import { BsGeoAltFill, BsBellFill, BsMapFill, BsBatteryHalf, BsPeopleFill, BsArrowRepeat, BsTagFill, BsBluetooth, BsLinkedin, BsGithub, BsGlobe } from "react-icons/bs";
 import Footer from '../../components/layout/Footer';
 import { Container, Row, Col, Card, Image } from 'react-bootstrap';
-import { FaMapMarkerAlt, FaDrawPolygon, FaHistory, FaUser } from 'react-icons/fa';
 import { useCases, team, features, geopulseFeatures } from '../../utility/landingPageData.jsx';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../assets/store/authStore.js';
+import { FaMapMarkerAlt, FaDrawPolygon, FaHistory, FaUser } from 'react-icons/fa';
 
 
 

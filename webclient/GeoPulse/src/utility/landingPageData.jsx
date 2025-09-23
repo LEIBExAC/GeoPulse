@@ -81,11 +81,11 @@ export const features = [
     {
       name: "Aditya Chaturvedi",
       role: "Developer",
-      img: "images/aditya.jpeg", // Replace with actual image path
+      img: "/images/aditya.jpg", // Replace with actual image path
       desc: "Driven by innovation and collaboration, I focus on bringing ideas to life with clean tech, efficient systems, and intuitive design. At GeoPulse, I ensure every tag and line of code solves real problems.",
       socials: {
-        linkedin: "#",
-        github: "#",
+        linkedin: "https://www.linkedin.com/in/iamadityachaturvedi",
+        github: "https://github.com/LEIBExAC",
         website: "#",
       },
     },
