@@ -13,7 +13,7 @@ export const useAuthStore = create((set) => ({
   signup: async (email, password, name) => {
     set({ isLoading: true, error: null });
     try {
-      const res = await fetch(`http://localhost:8080/signup`, {
+      const res = await fetch(`${backend_url}/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, name }),
@@ -71,7 +71,7 @@ export const useAuthStore = create((set) => ({
   verifyOtp: async (otp) => {
     set({ isLoading: true, error: null });
     try {
-      const res = await fetch(`http://localhost:8080/verify-otp`, {
+      const res = await fetch(`${backend_url}/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TagForm from '../../components/forms/TagForm';
 import { createTag } from '../../assets/api/tagApi';
+import SidebarUser from '../user/SidebarUser';
 
 const CreateTagPage = () => {
   const [response, setResponse] = useState(null);
@@ -15,8 +16,10 @@ const CreateTagPage = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h3 className="mb-4">Create New Tag</h3>
+    <div className='d-flex'>
+      <SidebarUser />
+      <div className='container mt-4'>
+        <h3 className="mb-4">Create New Tag</h3>
 
       <TagForm onSubmit={handleCreateTag} />
 
@@ -32,6 +35,7 @@ const CreateTagPage = () => {
           ❌ {response.message}
         </div>
       )}
+      </div>
     </div>
   );
 };
